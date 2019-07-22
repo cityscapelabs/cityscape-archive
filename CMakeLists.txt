@@ -10,8 +10,7 @@ SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
 # General compile settings
 IF (NOT CMAKE_BUILD_TYPE)
- SET(CMAKE_BUILD_TYPE "Debug")
- #SET(CMAKE_BUILD_TYPE "Release")
+ SET(CMAKE_BUILD_TYPE "Release")
 ENDIF (NOT CMAKE_BUILD_TYPE)
 
 # GNU specific settings
@@ -43,13 +42,28 @@ link_libraries(${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 
 # Include directories
 include_directories(BEFORE
+  ${cityscape_SOURCE_DIR}/external/
   ${cityscape_SOURCE_DIR}/include/
   ${cityscape_SOURCE_DIR}/include/graph/
 )
 
 # cityscape executable
 SET(cityscape_src
-  ${cityscape_SOURCE_DIR}/src/main.cc
 )
-
 add_executable(cityscape ${cityscape_SOURCE_DIR}/src/main.cc)
+
+# Unit test
+if(CITYSCAPE_BUILD_TESTING)
+  SET(cityscape_test_src
+    ${cityscape_SOURCE_DIR}/tests/test_main.cc
+    )
+  add_executable(cityscapetest ${cityscape_src} ${cityscape_test_src})
+  add_test(NAME cityscapetest COMMAND $<TARGET_FILE:cityscapetest>)
+  enable_testing()
+endif()
+
+# Coverage
+find_package(codecov)
+if(ENABLE_COVERAGE)
+  add_coverage(cityscapetest)
+endif()
