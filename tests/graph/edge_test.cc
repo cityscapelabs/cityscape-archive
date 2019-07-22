@@ -20,5 +20,22 @@ TEST_CASE("Graph edge", "[graph][edge]") {
     auto edge = std::make_shared<cityscape::graph::Edge>(src, dest, eid);
     // Test edge id
     REQUIRE(edge->id() == 1);
+
+    // Test edge tags
+    SECTION("Test edge tags") {
+      cityscape::id_t eid = 0;
+      // Tag
+      std::string tag = "road";
+      // Create a edge with an id of max
+      auto edge = std::make_shared<cityscape::graph::Edge>(src, dest, eid, tag);
+
+      // Test edge id
+      REQUIRE(edge->id() == 0);
+
+      // Check if tag is present
+      REQUIRE(edge->check_tag(tag) == true);
+      REQUIRE(edge->check_tag("") == false);
+      REQUIRE(edge->check_tag("pipe") == false);
+    }
   }
 }
