@@ -52,6 +52,7 @@ SET(cityscape_src
   ${cityscape_SOURCE_DIR}/src/graph/edge.cc
   ${cityscape_SOURCE_DIR}/src/graph/graph.cc
   ${cityscape_SOURCE_DIR}/src/graph/node.cc
+  ${cityscape_SOURCE_DIR}/src/index.cc
 
 )
 #add_executable(cityscape ${cityscape_SOURCE_DIR}/src/main.cc)
@@ -62,7 +63,8 @@ if(CITYSCAPE_BUILD_TESTING)
     ${cityscape_SOURCE_DIR}/tests/graph/edge_test.cc
     ${cityscape_SOURCE_DIR}/tests/graph/graph_test.cc
     ${cityscape_SOURCE_DIR}/tests/graph/node_test.cc
-    ${cityscape_SOURCE_DIR}/tests/test_main.cc
+    ${cityscape_SOURCE_DIR}/tests/index_test.cc
+    ${cityscape_SOURCE_DIR}/tests/main_test.cc
     )
   add_executable(cityscapetest ${cityscape_src} ${cityscape_test_src})
   add_test(NAME cityscapetest COMMAND $<TARGET_FILE:cityscapetest>)

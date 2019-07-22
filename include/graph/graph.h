@@ -1,8 +1,8 @@
 #ifndef CITYSCAPE_GRAPH_GRAPH_H_
 #define CITYSCAPE_GRAPH_GRAPH_H_
 
-#include "node.h"
 #include "edge.h"
+#include "node.h"
 
 namespace cityscape {
 namespace graph {
@@ -14,8 +14,7 @@ class Graph {
   //! Constructor with a unique graph id and tag
   //! \param[in] id Index of the graph
   //! \param[in] tag Tag to categorize graph (default is empty)
-  Graph( cityscape::id_t id,
-       const std::string& tag = std::string());
+  Graph(cityscape::id_t id, const std::string& tag = std::string());
 
   //! Graph id
   //! \retval id_ Id of the graph
