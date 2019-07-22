@@ -6,7 +6,7 @@
 TEST_CASE("Check IndexManager class", "[index]") {
   // Test node
   SECTION("Test index creation") {
-    
+
     // Create a new index
     auto idx = std::make_shared<cityscape::IndexManager>();
     // Check current index

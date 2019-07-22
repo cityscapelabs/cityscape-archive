@@ -3,7 +3,9 @@
 cityscape::IndexManager::IndexManager(cityscape::id_t idx) : index_{idx} {};
 
 //! Current index
-cityscape::id_t cityscape::IndexManager::current_index() const { return index_; }
+cityscape::id_t cityscape::IndexManager::current_index() const {
+  return index_;
+}
 
 //! Maximum index value
 cityscape::id_t cityscape::IndexManager::max() const {

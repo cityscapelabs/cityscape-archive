@@ -25,7 +25,6 @@ class Graph {
   bool check_tag(const std::string& tag) const;
 
   //! Add node
-  
 
  private:
   //! Graph id

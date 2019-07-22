@@ -19,7 +19,7 @@ class IndexManager {
 
   //! Max value
   cityscape::id_t max() const;
-  
+
   //! Create index
   cityscape::id_t create_index();
 
