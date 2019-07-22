@@ -1,0 +1,52 @@
+version: 2.0
+jobs:
+  build:
+    working_directory: /home/cityscapelabs/research/cityscape
+    docker:
+      - image: quay.io/cityscapelabs/cityscape
+    steps:
+      - checkout
+      # GCC
+      - run:
+          name: GCC build
+          command: |
+            mkdir -p build
+            [ "$(ls -A build)" ] && rm -rf build/*
+            cd build
+            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=On ..
+            make -j2
+            ctest -VV
+      # Clang
+      - run:
+          name: Clang + Static analysis
+          command: |
+            mkdir -p build
+            [ "$(ls -A build)" ] && rm -rf build/*
+            cd build
+            scan-build cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_EXPORT_COMPILE_COMMANDS=On ..
+            scan-build make -j2 
+            ctest -VV
+      # cppcheck
+      - run:
+          name: cppcheck
+          command: |
+            cppcheck --version
+            cppcheck --enable=warning --inconclusive --force --language=c++ --std=c++11 src/*.cc src/graph/*.cc  include/*.h include/graph/*.h test/*.cc test/graph/*.cc --error-exitcode=1
+      # clang-format
+      - run:
+          name: clang-format
+          command: |
+            python ./clang-tools/run-clang-format.py -r include/* src/* tests/*
+      # codecoverage
+      - run:
+          name: codecov.io
+          command: |
+            mkdir -p build
+            [ "$(ls -A build)" ] && rm -rf build/*
+            cd build
+            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ -DCMAKE_EXPORT_COMPILE_COMMANDS=On -DENABLE_COVERAGE=On ..
+            make cityscapetest_coverage -j2
+            ./cityscapetest_coverage
+            make gcov -j2  --ignore-errors
+            make lcov
+            bash <(curl -s https://codecov.io/bash) -X gcov
