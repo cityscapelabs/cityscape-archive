@@ -74,5 +74,6 @@ endif()
 # Coverage
 find_package(codecov)
 if(ENABLE_COVERAGE)
-  add_coverage(cityscapetest)
+  add_executable(cityscapetest_coverage ${cityscape_src} ${cityscape_test_src})
+  add_coverage(cityscapetest_coverage)
 endif()

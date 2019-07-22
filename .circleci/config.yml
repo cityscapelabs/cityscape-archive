@@ -23,7 +23,7 @@ jobs:
             mkdir -p build
             [ "$(ls -A build)" ] && rm -rf build/*
             cd build
-            scan-build cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_EXPORT_COMPILE_COMMANDS=On ..
+            scan-build cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_EXPORT_COMPILE_COMMANDS=On ..
             scan-build make -j2 
             ctest -VV
       # cppcheck
@@ -31,7 +31,7 @@ jobs:
           name: cppcheck
           command: |
             cppcheck --version
-            cppcheck --enable=warning --inconclusive --force --language=c++ --std=c++11 src/*.cc src/graph/*.cc  include/*.h include/graph/*.h test/*.cc test/graph/*.cc --error-exitcode=1
+            cppcheck --enable=warning --inconclusive --force --language=c++ --std=c++11 src/*.cc src/graph/*.cc include/*.h include/graph/*.h test/*.cc test/graph/*.cc --error-exitcode=1
       # clang-format
       - run:
           name: clang-format
