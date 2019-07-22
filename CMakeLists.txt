@@ -58,6 +58,7 @@ SET(cityscape_src
 # Unit test
 if(CITYSCAPE_BUILD_TESTING)
   SET(cityscape_test_src
+    ${cityscape_SOURCE_DIR}/tests/graph/edge_test.cc
     ${cityscape_SOURCE_DIR}/tests/graph/node_test.cc
     ${cityscape_SOURCE_DIR}/tests/test_main.cc
     )
