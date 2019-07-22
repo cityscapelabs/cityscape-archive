@@ -19,3 +19,9 @@ cityscape::id_t cityscape::graph::Edge::id() const { return id_; }
 bool cityscape::graph::Edge::check_tag(const std::string& tag) const {
   return (tags_.find(tag) != tags_.end() ? true : false);
 }
+
+//! Get edge weight
+double cityscape::graph::Edge::weight() const { return weight_; }
+
+//! Assign edge weight
+void cityscape::graph::Edge::weight(double weight) { weight_ = weight; }

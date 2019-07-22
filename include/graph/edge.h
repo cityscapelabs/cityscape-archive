@@ -30,11 +30,21 @@ class Edge {
   //! Check if the edge has a specific tag
   bool check_tag(const std::string& tag) const;
 
+  //! Get edge weight
+  //! \retval weight_ Weight of the edge
+  double weight() const;
+
+  //! Assign edge weight
+  //! \param[in] weight Weight of the edge
+  void weight(double weight);
+
  private:
   //! Edge id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
   //! Tags
   std::set<std::string> tags_;
+  //! Weight
+  double weight_{0.};
   //! Source node
   std::shared_ptr<cityscape::graph::Node> src_;
   //! Destination node
