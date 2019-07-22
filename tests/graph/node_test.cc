@@ -1,5 +1,3 @@
-#include <limits>
-
 #include "catch.hpp"
 
 #include "node.h"
@@ -9,7 +7,7 @@ TEST_CASE("Graph node", "[graph][node]") {
   // Test node
   SECTION("Test node") {
     cityscape::id_t nid = 1;
-    // Create a node with an id of max
+    // Create a node with an id of 1
     auto node = std::make_shared<cityscape::graph::Node>(nid);
     // Test node id
     REQUIRE(node->id() == 1);

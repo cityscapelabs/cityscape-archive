@@ -50,6 +50,7 @@ include_directories(BEFORE
 # cityscape executable
 SET(cityscape_src
   ${cityscape_SOURCE_DIR}/src/graph/edge.cc
+  ${cityscape_SOURCE_DIR}/src/graph/graph.cc
   ${cityscape_SOURCE_DIR}/src/graph/node.cc
 
 )
@@ -59,6 +60,7 @@ SET(cityscape_src
 if(CITYSCAPE_BUILD_TESTING)
   SET(cityscape_test_src
     ${cityscape_SOURCE_DIR}/tests/graph/edge_test.cc
+    ${cityscape_SOURCE_DIR}/tests/graph/graph_test.cc
     ${cityscape_SOURCE_DIR}/tests/graph/node_test.cc
     ${cityscape_SOURCE_DIR}/tests/test_main.cc
     )

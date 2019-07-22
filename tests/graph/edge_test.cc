@@ -1,5 +1,3 @@
-#include <limits>
-
 #include "catch.hpp"
 
 #include "edge.h"
@@ -17,7 +15,7 @@ TEST_CASE("Graph edge", "[graph][edge]") {
     auto dest = std::make_shared<cityscape::graph::Node>(dnid);
 
     cityscape::id_t eid = 1;
-    // Create a edge with an id of max
+    // Create a edge with an id of 1
     auto edge = std::make_shared<cityscape::graph::Edge>(src, dest, eid);
     // Test edge id
     REQUIRE(edge->id() == 1);
