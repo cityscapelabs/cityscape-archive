@@ -49,12 +49,16 @@ include_directories(BEFORE
 
 # cityscape executable
 SET(cityscape_src
+  ${cityscape_SOURCE_DIR}/src/graph/edge.cc
+  ${cityscape_SOURCE_DIR}/src/graph/node.cc
+
 )
-add_executable(cityscape ${cityscape_SOURCE_DIR}/src/main.cc)
+#add_executable(cityscape ${cityscape_SOURCE_DIR}/src/main.cc)
 
 # Unit test
 if(CITYSCAPE_BUILD_TESTING)
   SET(cityscape_test_src
+    ${cityscape_SOURCE_DIR}/tests/graph/node_test.cc
     ${cityscape_SOURCE_DIR}/tests/test_main.cc
     )
   add_executable(cityscapetest ${cityscape_src} ${cityscape_test_src})

@@ -15,11 +15,13 @@ class Edge;
 //! Graph node class
 //! \brief Base class of a graph node (vertex)
 class Node {
+ public:
   //! Constructor with unique node id
-  explicit Node(cityscape::id_t id) : id_{id} {};
+  //! \param[in] id Index of the edge
+  explicit Node(cityscape::id_t id);
 
   //! Node id
-  cityscape::id_t id() { return id_; }
+  cityscape::id_t id() const;
 
  private:
   //! Node id
