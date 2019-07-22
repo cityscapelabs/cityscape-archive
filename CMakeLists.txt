@@ -37,13 +37,14 @@ option(CITYSCAPE_BUILD_TESTING "enable testing for cityscape" ON)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 # Boost Archive
-find_package(Boost REQUIRED COMPONENTS filesystem system geometry)
+find_package(Boost REQUIRED COMPONENTS filesystem system)
 include_directories(${BOOST_INCLUDE_DIRS})
 link_libraries(${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 
 # Include directories
 include_directories(BEFORE
   ${cityscape_SOURCE_DIR}/include/
+  ${cityscape_SOURCE_DIR}/include/graph/
 )
 
 # cityscape executable
@@ -51,7 +52,4 @@ SET(cityscape_src
   ${cityscape_SOURCE_DIR}/src/main.cc
 )
 
-add_library(lcityscape SHARED ${cityscape_src} ${cityscape_vtk})
-
 add_executable(cityscape ${cityscape_SOURCE_DIR}/src/main.cc)
-target_link_libraries(cityscape lcityscape)
