@@ -9,25 +9,25 @@
 namespace cityscape {
 //! Graph index class
 //! \brief Base class of a graph index (vertex)
-class Index {
+class IndexManager {
  public:
   //! Constructor with an inital value for index
-  explicit Index(cityscape::id_t idx = 0);
+  explicit IndexManager(cityscape::id_t idx = 0);
 
   //! Current index
-  cityscape::id_t current_id() const;
+  cityscape::id_t current_index() const;
 
   //! Max value
   cityscape::id_t max() const;
   
-  //! Create id
-  cityscape::id_t create_id();
+  //! Create index
+  cityscape::id_t create_index();
 
  private:
-  //! Index id
+  //! index
   cityscape::id_t index_{0};
   //! Mutex
-  std::mutex id_mutex_;
+  std::mutex index_mutex_;
 };
 }  // namespace cityscape
 
