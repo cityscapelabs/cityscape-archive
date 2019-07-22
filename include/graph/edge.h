@@ -32,7 +32,7 @@ class Edge {
 
  private:
   //! Edge id
-  cityscape::id_t id_;
+  cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
   //! Tags
   std::set<std::string> tags_;
   //! Source node

@@ -23,5 +23,22 @@ TEST_CASE("Graph node", "[graph][node]") {
       // Test node id
       REQUIRE(node->id() == std::numeric_limits<cityscape::id_t>::max());
     }
+
+    // Test node tags
+    SECTION("Test node tags") {
+      cityscape::id_t nid = 0;
+      // Tag
+      std::string tag = "road";
+      // Create a node with an id of 0 and a road tag
+      auto node = std::make_shared<cityscape::graph::Node>(nid, tag);
+
+      // Test node id
+      REQUIRE(node->id() == 0);
+
+      // Check if tag is present
+      REQUIRE(node->check_tag(tag) == true);
+      REQUIRE(node->check_tag("") == false);
+      REQUIRE(node->check_tag("pipe") == false);
+    }
   }
 }

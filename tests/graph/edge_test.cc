@@ -26,7 +26,7 @@ TEST_CASE("Graph edge", "[graph][edge]") {
       cityscape::id_t eid = 0;
       // Tag
       std::string tag = "road";
-      // Create a edge with an id of max
+      // Create a edge with an id of 0 and a road tag
       auto edge = std::make_shared<cityscape::graph::Edge>(src, dest, eid, tag);
 
       // Test edge id
