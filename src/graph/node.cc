@@ -18,6 +18,5 @@ bool cityscape::graph::Node::check_tag(const std::string& tag) const {
   return (tags_.find(tag) != tags_.end() ? true : false);
 }
 
-
 //! Return name
 std::string cityscape::graph::Node::name() const { return name_; }
