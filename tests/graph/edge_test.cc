@@ -10,9 +10,11 @@ TEST_CASE("Graph edge", "[graph][edge]") {
     // Create source and destination node
     cityscape::id_t snid = 0;
     cityscape::id_t dnid = 1;
+    // Name
+    std::string name = "osm123";
 
-    auto src = std::make_shared<cityscape::graph::Node>(snid);
-    auto dest = std::make_shared<cityscape::graph::Node>(dnid);
+    auto src = std::make_shared<cityscape::graph::Node>(snid, name);
+    auto dest = std::make_shared<cityscape::graph::Node>(dnid, name);
 
     cityscape::id_t eid = 1;
     // Create a edge with an id of 1

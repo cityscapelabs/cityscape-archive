@@ -25,7 +25,7 @@ class Graph {
   bool check_tag(const std::string& tag) const;
 
   //! Add node
-
+  // void add_node(const std::string& name);
  private:
   //! Graph id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};

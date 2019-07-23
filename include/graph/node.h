@@ -20,8 +20,10 @@ class Node {
  public:
   //! Constructor with unique node id
   //! \param[in] id Index of the edge
+  //! \param[in] name Unique name of the node
   //! \param[in] tag Tag to categorize edge (default is empty)
-  explicit Node(cityscape::id_t id, const std::string& tag = std::string());
+  explicit Node(cityscape::id_t id, const std::string& name,
+                const std::string& tag = std::string());
 
   //! Node id
   cityscape::id_t id() const;
@@ -29,11 +31,16 @@ class Node {
   //! Check if the edge has a specific tag
   bool check_tag(const std::string& tag) const;
 
+  //! Return name
+  std::string name() const;
+
  private:
   //! Node id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
   //! Tags
   std::set<std::string> tags_;
+  //! Name
+  std::string name_;
   //! In-edges
   std::vector<std::shared_ptr<cityscape::graph::Edge>> in_edges_;
   //! Out-edges
