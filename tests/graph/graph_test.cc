@@ -30,5 +30,29 @@ TEST_CASE("Graph graph", "[graph]") {
       REQUIRE(graph->check_tag("") == false);
       REQUIRE(graph->check_tag("pipe") == false);
     }
+
+    // Add node
+    SECTION("Add node") {
+      cityscape::id_t nid = 1;
+      // Name
+      std::string name = "osm123";
+      // Create a node with an id of 1
+      auto node = std::make_shared<cityscape::graph::Node>(nid, name);
+      // Test node id
+      REQUIRE(node->id() == 1);
+      // Check name
+      REQUIRE(node->name() == name);
+
+      // Check number of nodes
+      REQUIRE(graph->nnodes() == 0);
+
+      // Add node to graph
+      REQUIRE(graph->add_node(node) == true);
+      // Adding a duplicate node should fail
+      REQUIRE(graph->add_node(node) == false);
+
+      // Check number of nodes
+      REQUIRE(graph->nnodes() == 1);
+    }
   }
 }

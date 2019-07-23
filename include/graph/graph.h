@@ -1,6 +1,8 @@
 #ifndef CITYSCAPE_GRAPH_GRAPH_H_
 #define CITYSCAPE_GRAPH_GRAPH_H_
 
+#include "tsl/robin_map.h"
+
 #include "edge.h"
 #include "index_manager.h"
 #include "node.h"
@@ -25,7 +27,11 @@ class Graph {
   bool check_tag(const std::string& tag) const;
 
   //! Add node
-  // void add_node(const std::string& name);
+  bool add_node(const std::shared_ptr<Node>& node);
+
+  //! Number of nodes
+  cityscape::id_t nnodes() const;
+
  private:
   //! Graph id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
@@ -36,9 +42,9 @@ class Graph {
   //! Edge ID manager
   cityscape::IndexManager edge_idx_;
   //! Nodes
-  std::vector<std::shared_ptr<cityscape::graph::Node>> nodes_;
-  //! Edges
-  std::vector<std::shared_ptr<cityscape::graph::Edge>> edges_;
+  tsl::robin_map<cityscape::id_t, std::shared_ptr<cityscape::graph::Node>>
+      nodes_;
+  tsl::robin_map<std::string, cityscape::id_t> nodes_names_;
 };
 }  // namespace graph
 }  // namespace cityscape
