@@ -22,6 +22,10 @@ TEST_CASE("Graph edge", "[graph][edge]") {
     // Test edge id
     REQUIRE(edge->id() == 1);
 
+    // Test source and destiation nodes
+    REQUIRE(edge->src()->id() == src->id());
+    REQUIRE(edge->dest()->id() == dest->id());
+
     // Test edge tags
     SECTION("Test edge tags") {
       cityscape::id_t eid = 0;
