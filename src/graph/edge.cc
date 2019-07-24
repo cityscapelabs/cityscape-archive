@@ -6,8 +6,8 @@ cityscape::graph::Edge::Edge(
     const std::shared_ptr<cityscape::graph::Node>& dest, cityscape::id_t id,
     const std::string& tag)
     : id_{id} {
-  src_ = src;
-  dest_ = dest;
+  src_ = std::const_pointer_cast<const cityscape::graph::Node>(src);
+  dest_ = std::const_pointer_cast<const cityscape::graph::Node>(dest);
   // If not an empty tag, insert tag
   if (!tag.empty()) tags_.insert(tag);
 }
@@ -25,3 +25,15 @@ double cityscape::graph::Edge::weight() const { return weight_; }
 
 //! Assign edge weight
 void cityscape::graph::Edge::weight(double weight) { weight_ = weight; }
+
+//! Source node pointer
+std::shared_ptr<const cityscape::graph::Node> cityscape::graph::Edge::src()
+    const {
+  return src_;
+}
+
+//! Destination node pointer
+std::shared_ptr<const cityscape::graph::Node> cityscape::graph::Edge::dest()
+    const {
+  return dest_;
+}

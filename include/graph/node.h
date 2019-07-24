@@ -10,9 +10,13 @@
 
 namespace cityscape {
 namespace graph {
+
 //! Forward declaration
 //! Graph edge class
 class Edge;
+
+//! Direction
+enum Direction { Any, Outgoing, Incoming };
 
 //! Graph node class
 //! \brief Base class of a graph node (vertex)
@@ -21,7 +25,7 @@ class Node {
   //! Constructor with unique node id
   //! \param[in] id Index of the edge
   //! \param[in] name Unique name of the node
-  //! \param[in] tag Tag to categorize edge (default is empty)
+  //! \param[in] tag Tag to categorize node (default is empty)
   explicit Node(cityscape::id_t id, const std::string& name,
                 const std::string& tag = std::string());
 
@@ -29,10 +33,17 @@ class Node {
   cityscape::id_t id() const;
 
   //! Check if the edge has a specific tag
+  //! \param[in] tag Tag to categorize node
   bool check_tag(const std::string& tag) const;
 
   //! Return name
   std::string name() const;
+
+  //! Add edge
+  //! \param[in] edge Edge pointer
+  //! \param[in] dir Direction of edge
+  void add_edge(const std::shared_ptr<cityscape::graph::Edge>& edge,
+                Direction dir);
 
  private:
   //! Node id

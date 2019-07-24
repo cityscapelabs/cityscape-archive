@@ -38,6 +38,12 @@ class Edge {
   //! \param[in] weight Weight of the edge
   void weight(double weight);
 
+  //! Source node
+  std::shared_ptr<const cityscape::graph::Node> src() const;
+
+  //! Destination node
+  std::shared_ptr<const cityscape::graph::Node> dest() const;
+
  private:
   //! Edge id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
@@ -46,9 +52,9 @@ class Edge {
   //! Weight
   double weight_{0.};
   //! Source node
-  std::shared_ptr<cityscape::graph::Node> src_;
+  std::shared_ptr<const cityscape::graph::Node> src_;
   //! Destination node
-  std::shared_ptr<cityscape::graph::Node> dest_;
+  std::shared_ptr<const cityscape::graph::Node> dest_;
 };
 }  // namespace graph
 }  // namespace cityscape

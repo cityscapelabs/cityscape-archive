@@ -1,3 +1,4 @@
+version: 0.6.1
 MIT License
 
 Copyright (c) 2017 Tessil

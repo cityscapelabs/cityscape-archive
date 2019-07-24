@@ -20,3 +20,19 @@ bool cityscape::graph::Node::check_tag(const std::string& tag) const {
 
 //! Return name
 std::string cityscape::graph::Node::name() const { return name_; }
+
+//! Add edge to node
+void cityscape::graph::Node::add_edge(
+    const std::shared_ptr<cityscape::graph::Edge>& edge, Direction dir) {
+  // Incoming edge
+  if (dir == cityscape::graph::Direction::Incoming)
+    in_edges_.emplace_back(edge);
+  // Outgoing edge
+  else if (dir == cityscape::graph::Direction::Outgoing)
+    out_edges_.emplace_back(edge);
+  // Any direction
+  else {
+    in_edges_.emplace_back(edge);
+    out_edges_.emplace_back(edge);
+  }
+}

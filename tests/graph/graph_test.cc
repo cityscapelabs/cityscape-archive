@@ -54,5 +54,58 @@ TEST_CASE("Graph graph", "[graph]") {
       // Check number of nodes
       REQUIRE(graph->nnodes() == 1);
     }
+
+    // Create an edge
+    SECTION("Create an edge") {
+      // Create a graph with an id of 0
+      auto graph = std::make_shared<cityscape::graph::Graph>(0);
+
+      // Create a node with an id of 0
+      auto node0 = std::make_shared<cityscape::graph::Node>(0, "osm0");
+      // Add node to graph
+      REQUIRE(graph->add_node(node0) == true);
+      REQUIRE(graph->nnodes() == 1);
+
+      // Create a node with an id of 1
+      auto node1 = std::make_shared<cityscape::graph::Node>(1, "osm1");
+      // Add node to graph
+      REQUIRE(graph->add_node(node1) == true);
+      REQUIRE(graph->nnodes() == 2);
+
+      // Directed edges
+      SECTION("Create directed edges") {
+        // Number of edges
+        REQUIRE(graph->nedges() == 0);
+
+        // Create edge 0 -> 1
+        REQUIRE(graph->create_edge("osm0", "osm1", true) == true);
+        REQUIRE(graph->nedges() == 1);
+
+        // Create edge 1 -> 0
+        REQUIRE(graph->create_edge("osm1", "osm0", true) == true);
+        REQUIRE(graph->nedges() == 2);
+
+        // Non-existant edge
+        REQUIRE(graph->create_edge("osm0", "osm2", true) == false);
+
+        // Duplicate nodes
+        REQUIRE(graph->create_edge("osm0", "osm0", true) == false);
+        REQUIRE(graph->nedges() == 2);
+      }
+
+      // Undirected edges
+      SECTION("Create undirected edges") {
+        // Number of edges
+        REQUIRE(graph->nedges() == 0);
+
+        // Create edge
+        REQUIRE(graph->create_edge("osm0", "osm1", false) == true);
+        REQUIRE(graph->nedges() == 2);
+
+        // Non-existant edge
+        REQUIRE(graph->create_edge("osm2", "osm1", false) == false);
+        REQUIRE(graph->nedges() == 2);
+      }
+    }
   }
 }

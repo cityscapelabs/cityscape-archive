@@ -26,6 +26,8 @@ class IndexManager {
  private:
   //! index
   cityscape::id_t index_{0};
+  //! Initial value
+  cityscape::id_t init_{0};
   //! Mutex
   std::mutex index_mutex_;
 };

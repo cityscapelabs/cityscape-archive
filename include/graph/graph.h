@@ -1,6 +1,8 @@
 #ifndef CITYSCAPE_GRAPH_GRAPH_H_
 #define CITYSCAPE_GRAPH_GRAPH_H_
 
+#include <map>
+
 #include "tsl/robin_map.h"
 
 #include "edge.h"
@@ -27,10 +29,22 @@ class Graph {
   bool check_tag(const std::string& tag) const;
 
   //! Add node
+  //! \param[in] node Pointer to node object
   bool add_node(const std::shared_ptr<Node>& node);
 
   //! Number of nodes
   cityscape::id_t nnodes() const;
+
+  //! Create edge
+  //! \param[in] src Source node name
+  //! \param[in] dest Destination node name
+  //! \param[in] directed Edge is directed or undirected
+  //! \param[in] tag Tag to categorize edge (default is empty)
+  bool create_edge(const std::string& src, const std::string& dest,
+                   bool directed, const std::string& tag = std::string());
+
+  //! Number of edges
+  cityscape::id_t nedges() const;
 
  private:
   //! Graph id
@@ -44,7 +58,12 @@ class Graph {
   //! Nodes
   tsl::robin_map<cityscape::id_t, std::shared_ptr<cityscape::graph::Node>>
       nodes_;
+  //! Nodes and names key
   tsl::robin_map<std::string, cityscape::id_t> nodes_names_;
+  // Edges
+  std::map<std::tuple<cityscape::id_t, cityscape::id_t>,
+           std::shared_ptr<cityscape::graph::Edge>>
+      edges_;
 };
 }  // namespace graph
 }  // namespace cityscape
