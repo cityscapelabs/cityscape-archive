@@ -108,4 +108,63 @@ TEST_CASE("Graph graph", "[graph]") {
       }
     }
   }
+  SECTION("Create test graph") {
+    // Create a graph with an id of 0
+    auto graph = std::make_shared<cityscape::graph::Graph>(0);
+
+    // Create nodes
+    auto node0 = std::make_shared<cityscape::graph::Node>(0, "osm0");
+    auto node1 = std::make_shared<cityscape::graph::Node>(1, "osm1");
+    auto node2 = std::make_shared<cityscape::graph::Node>(2, "osm2");
+    auto node3 = std::make_shared<cityscape::graph::Node>(3, "osm3");
+    auto node4 = std::make_shared<cityscape::graph::Node>(4, "osm4");
+    auto node5 = std::make_shared<cityscape::graph::Node>(5, "osm5");
+    REQUIRE(graph->add_node(node0) == true);
+    REQUIRE(graph->add_node(node1) == true);
+    REQUIRE(graph->add_node(node2) == true);
+    REQUIRE(graph->add_node(node3) == true);
+    REQUIRE(graph->add_node(node4) == true);
+    REQUIRE(graph->add_node(node5) == true);
+
+    // Create edges
+    REQUIRE(graph->create_edge("osm0", "osm1", true) == true);
+    REQUIRE(graph->create_edge("osm0", "osm2", true) == true);
+    REQUIRE(graph->create_edge("osm0", "osm5", true) == true);
+    REQUIRE(graph->create_edge("osm1", "osm2", true) == true);
+    REQUIRE(graph->create_edge("osm1", "osm3", true) == true);
+    REQUIRE(graph->create_edge("osm2", "osm0", true) == true);
+    REQUIRE(graph->create_edge("osm2", "osm3", true) == true);
+    REQUIRE(graph->create_edge("osm2", "osm5", true) == true);
+    REQUIRE(graph->create_edge("osm3", "osm2", true) == true);
+    REQUIRE(graph->create_edge("osm3", "osm4", true) == true);
+    REQUIRE(graph->create_edge("osm4", "osm5", true) == true);
+
+    // Add weights
+    (graph->edge(1, 2))->weight(1.5);
+    (graph->edge(1, 2))->weight(1.5);
+    (graph->edge(1, 3))->weight(9.1);
+    (graph->edge(1, 6))->weight(14.3);
+    (graph->edge(2, 3))->weight(15.9);
+    (graph->edge(2, 4))->weight(5.5);
+    (graph->edge(3, 1))->weight(5.6);
+    (graph->edge(3, 4))->weight(11.6);
+    (graph->edge(3, 6))->weight(2.4);
+    (graph->edge(4, 3))->weight(0.2);
+    (graph->edge(4, 5))->weight(6.2);
+    (graph->edge(5, 6))->weight(9.7);
+
+    // Check weights
+    REQUIRE((graph->edge(1, 2))->weight() == Approx(1.5).epsilon(Tolerance));
+    REQUIRE((graph->edge(1, 2))->weight() == Approx(1.5).epsilon(Tolerance));
+    REQUIRE((graph->edge(1, 3))->weight() == Approx(9.1).epsilon(Tolerance));
+    REQUIRE((graph->edge(1, 6))->weight() == Approx(14.3).epsilon(Tolerance));
+    REQUIRE((graph->edge(2, 3))->weight() == Approx(15.9).epsilon(Tolerance));
+    REQUIRE((graph->edge(2, 4))->weight() == Approx(5.5).epsilon(Tolerance));
+    REQUIRE((graph->edge(3, 1))->weight() == Approx(5.6).epsilon(Tolerance));
+    REQUIRE((graph->edge(3, 4))->weight() == Approx(11.6).epsilon(Tolerance));
+    REQUIRE((graph->edge(3, 6))->weight() == Approx(2.4).epsilon(Tolerance));
+    REQUIRE((graph->edge(4, 3))->weight() == Approx(0.2).epsilon(Tolerance));
+    REQUIRE((graph->edge(4, 5))->weight() == Approx(6.2).epsilon(Tolerance));
+    REQUIRE((graph->edge(5, 6))->weight() == Approx(9.7).epsilon(Tolerance));
+  }
 }

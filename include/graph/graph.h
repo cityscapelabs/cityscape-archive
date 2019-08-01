@@ -46,6 +46,13 @@ class Graph {
   //! Number of edges
   cityscape::id_t nedges() const;
 
+  //! Return an edge pointer
+  //! \param[in] src Source node id
+  //! \param[in] dest Destination node id
+  //! \retval edge Edge pointer
+  std::shared_ptr<cityscape::graph::Edge> edge(cityscape::id_t src,
+                                               cityscape::id_t dest) const;
+
  private:
   //! Graph id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};

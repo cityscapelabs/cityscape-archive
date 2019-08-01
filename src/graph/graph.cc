@@ -81,3 +81,23 @@ bool cityscape::graph::Graph::create_edge(const std::string& src,
 cityscape::id_t cityscape::graph::Graph::nedges() const {
   return edges_.size();
 }
+
+//! Return an edge pointer
+std::shared_ptr<cityscape::graph::Edge> cityscape::graph::Graph::edge(
+    cityscape::id_t src, cityscape::id_t dest) const {
+
+  std::shared_ptr<cityscape::graph::Edge> edge;
+  try {
+    // Locate edge in graph
+    auto eitr = edges_.find(std::make_tuple(src, dest));
+    if (eitr != edges_.end())
+      edge = (*eitr).second;
+    else {
+      edge = nullptr;
+      throw std::runtime_error("Invalid edge, does not exist\n");
+    }
+  } catch (std::exception& exception) {
+    std::cout << "Exception: " << exception.what() << "\n";
+  }
+  return edge;
+}
