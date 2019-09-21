@@ -184,8 +184,10 @@ std::vector<cityscape::id_t> cityscape::graph::Graph::dijkstra(
   double cost = 0;
   for (cityscape::id_t i = 0; i < path.size() - 1; ++i) {
     cost += edges_.at(std::make_tuple(path[i] - 1, path[i + 1] - 1))->weight();
-    std::cout << "Edge: " << path[i] << " -> " << path[i + 1] << " cost: "
-              << edges_.at(std::make_tuple(path[i]-1, path[i + 1]-1))->weight() << std::endl;
+    std::cout
+        << "Edge: " << path[i] << " -> " << path[i + 1] << " cost: "
+        << edges_.at(std::make_tuple(path[i] - 1, path[i + 1] - 1))->weight()
+        << std::endl;
   }
   std::cout << "Path cost: " << cost << std::endl;
 
