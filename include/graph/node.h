@@ -45,6 +45,10 @@ class Node {
   void add_edge(const std::shared_ptr<cityscape::graph::Edge>& edge,
                 Direction dir);
 
+  //! Out edges
+  //! \retval out_edges Return vector of outgoing edges
+  std::vector<std::shared_ptr<cityscape::graph::Edge>> out_edges() const;
+
  private:
   //! Node id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};

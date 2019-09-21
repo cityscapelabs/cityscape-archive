@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "catch.hpp"
 
 #include "graph.h"
@@ -166,5 +168,17 @@ TEST_CASE("Graph graph", "[graph]") {
     REQUIRE((graph->edge(4, 3))->weight() == Approx(0.2).epsilon(Tolerance));
     REQUIRE((graph->edge(4, 5))->weight() == Approx(6.2).epsilon(Tolerance));
     REQUIRE((graph->edge(5, 6))->weight() == Approx(9.7).epsilon(Tolerance));
+    
+    // Run Dijkstra Priority Queue
+    const auto source = "osm1";
+    const auto destination = "osm4";
+    const auto path = graph->dijkstra(source, destination);
+    // Check distances
+    REQUIRE(path.size() == 3);
+
+    std::cout << "Path: " << source << "\t" << destination;
+    for (const auto edge : path)
+      std::cout << "\t" << edge;
+
   }
 }

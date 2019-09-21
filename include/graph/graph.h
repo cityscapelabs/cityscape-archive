@@ -1,7 +1,9 @@
 #ifndef CITYSCAPE_GRAPH_GRAPH_H_
 #define CITYSCAPE_GRAPH_GRAPH_H_
 
+#include <iostream>
 #include <map>
+#include <queue>
 
 #include "tsl/robin_map.h"
 
@@ -52,6 +54,13 @@ class Graph {
   //! \retval edge Edge pointer
   std::shared_ptr<cityscape::graph::Edge> edge(cityscape::id_t src,
                                                cityscape::id_t dest) const;
+
+  //! Compute the shortest path using priority queue
+  //! \param[in] src Source node name
+  //! \param[in] dest Destination node name
+  //! \retval path Vertices of the path from source to destination
+  std::vector<cityscape::id_t> dijkstra(const std::string& src,
+                                        const std::string& dest) const;
 
  private:
   //! Graph id

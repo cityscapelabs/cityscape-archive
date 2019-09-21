@@ -101,3 +101,93 @@ std::shared_ptr<cityscape::graph::Edge> cityscape::graph::Graph::edge(
   }
   return edge;
 }
+
+// Dijktra shortest paths from src to a vertex
+std::vector<cityscape::id_t> cityscape::graph::Graph::dijkstra(
+    const std::string& src, const std::string& dest) const {
+
+  cityscape::id_t source = nodes_names_.at(src);
+  cityscape::id_t destination = nodes_names_.at(dest);
+
+  // Using lambda to compare elements.
+  auto compare =
+      [](std::pair<cityscape::graph::weight_t, cityscape::id_t> left,
+         std::pair<cityscape::graph::weight_t, cityscape::id_t> right) {
+        return left.first > right.first;
+      };
+
+  // Create a priority queue to store weights and vertices
+  std::priority_queue<
+      std::pair<cityscape::graph::weight_t, cityscape::id_t>,
+      std::vector<std::pair<cityscape::graph::weight_t, cityscape::id_t>>,
+      decltype(compare)>
+      priority_queue(compare);
+
+  // Create a vector for distances and initialize all to max
+  std::vector<graph::weight_t> distances;
+  distances.resize(this->nodes_.size(),
+                   std::numeric_limits<cityscape::graph::weight_t>::max());
+  // Parent array to store shortest path tree
+  std::vector<cityscape::id_t> parent;
+  parent.resize(this->nodes_.size(), -1);
+
+  std::vector<cityscape::id_t> path;
+  if (nodes_.find(source) == nodes_.end() ||
+      nodes_.find(destination) == nodes_.end())
+    return path;
+
+  // Insert source itself in priority queue & initialize its distance as 0.
+  priority_queue.push(std::make_pair(0., source));
+  distances[source] = 0.;
+
+  // Looping till priority queue becomes empty (or all
+  // distances are not finalized)
+  while (!priority_queue.empty()) {
+    // {min_weight, vertex} sorted based on weights (distance)
+    cityscape::id_t u = priority_queue.top().second;
+    priority_queue.pop();
+
+    // Break if destination is reached
+    if (u == destination) break;
+
+    // Get all adjacent vertices of a vertex
+    for (const auto& edge : nodes_.at(u)->out_edges()) {
+      // Get node id of neighbour of u.
+      const cityscape::id_t neighbour = edge->dest()->id();
+
+      // Distance from source to neighbour
+      // distance_u = distance to current node + weight of edge u to
+      // neighbour
+      const cityscape::graph::weight_t distance_u =
+          distances.at(u) + edge->weight();
+      // If there is shorted path to neighbour vertex through u.
+      if (distances.at(neighbour) > distance_u) {
+        parent[neighbour] = u;
+        // Update distance of the vertex
+        distances.at(neighbour) = distance_u;
+        priority_queue.push(std::make_pair(distance_u, neighbour));
+      }
+    }
+  }
+
+  path.emplace_back(destination);
+  // Iterate until source has been reached
+  while (destination != source && destination != -1) {
+    destination = parent.at(destination);
+    if (destination != source && destination != -1)
+      path.emplace_back(destination);
+  }
+  path.emplace_back(source);
+  // Reverse to arrange path from source to destination
+  std::reverse(std::begin(path), std::end(path));
+
+  double cost = 0;
+  for (cityscape::id_t i = 0; i < path.size() - 1; ++i) {
+    cost += edges_.at(std::make_tuple(path[i] - 1, path[i + 1] - 1))->weight();
+    std::cout << "Edge: " << path[i] << " -> " << path[i + 1] << " cost: "
+              << edges_.at(std::make_tuple(path[i]-1, path[i + 1]-1))->weight() << std::endl;
+  }
+  std::cout << "Path cost: " << cost << std::endl;
+
+  return path;
+}

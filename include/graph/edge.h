@@ -10,6 +10,9 @@
 namespace cityscape {
 namespace graph {
 
+// Alias graph edge weight as double
+using weight_t = double;
+
 //! Graph edge class
 //! \brief Base class of a graph edge
 class Edge {
