@@ -178,7 +178,10 @@ TEST_CASE("Graph graph", "[graph]") {
     REQUIRE(path.at(3) == 2);
     REQUIRE(path.at(4) == 5);
 
-    // Cost of path
+    // Cost of path (default as nodes)
     REQUIRE(graph->path_cost(path) == Approx(9.6).epsilon(Tolerance));
+    // Cost of path setting explicity as nodes
+    REQUIRE(graph->path_cost(path, cityscape::graph::Graph::Container::Nodes) ==
+            Approx(9.6).epsilon(Tolerance));
   }
 }
