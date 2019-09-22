@@ -61,16 +61,18 @@ class Graph {
   //! Compute the shortest path using priority queue
   //! \param[in] src Source node name
   //! \param[in] dest Destination node name
+  //! \param[in] ctr Container type (default is edges)
   //! \retval path Vertices of the path from source to destination
   std::vector<cityscape::id_t> dijkstra(const std::string& src,
-                                        const std::string& dest) const;
+                                        const std::string& dest,
+                                        Container ctr = Container::Edges) const;
 
   // Compute cost of shortest paths from src to a vertex
-  //! \param[in] path Vector of vertices or edges (default is node)
-  //! \param[in] ctr Container type (default is node)
+  //! \param[in] path Vector of vertices or edges (default is edges)
+  //! \param[in] ctr Container type (default is edges)
   //! \retval cost Cost of the path
   double path_cost(const std::vector<cityscape::id_t>& path,
-                   Container ctr = Container::Nodes) const;
+                   Container ctr = Container::Edges) const;
 
  private:
   //! Graph id
@@ -90,6 +92,9 @@ class Graph {
   std::map<std::tuple<cityscape::id_t, cityscape::id_t>,
            std::shared_ptr<cityscape::graph::Edge>>
       edges_;
+  // Edges
+  tsl::robin_map<cityscape::id_t, std::shared_ptr<cityscape::graph::Edge>>
+      edge_ids_;
 };
 }  // namespace graph
 }  // namespace cityscape

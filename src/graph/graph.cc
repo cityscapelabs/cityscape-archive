@@ -59,6 +59,7 @@ bool cityscape::graph::Graph::create_edge(const std::string& src,
     auto edge =
         std::make_shared<cityscape::graph::Edge>(source, destination, eid, tag);
     edges_.emplace(std::make_pair(std::make_tuple(src_id, dest_id), edge));
+    edge_ids_.emplace(std::make_pair(eid, edge));
 
     // Directed graph
     if (directed) {
@@ -103,7 +104,8 @@ std::shared_ptr<cityscape::graph::Edge> cityscape::graph::Graph::edge(
 
 // Dijktra shortest paths from src to a vertex
 std::vector<cityscape::id_t> cityscape::graph::Graph::dijkstra(
-    const std::string& src, const std::string& dest) const {
+    const std::string& src, const std::string& dest,
+    cityscape::graph::Graph::Container ctr) const {
 
   cityscape::id_t source = nodes_names_.at(src);
   cityscape::id_t destination = nodes_names_.at(dest);
@@ -179,6 +181,19 @@ std::vector<cityscape::id_t> cityscape::graph::Graph::dijkstra(
   path.emplace_back(source);
   // Reverse to arrange path from source to destination
   std::reverse(std::begin(path), std::end(path));
+
+  // Container of edges
+  if (ctr == cityscape::graph::Graph::Container::Edges) {
+    // Create a vector of edges
+    std::vector<cityscape::id_t> edges;
+    edges.reserve(path.size() - 1);
+    for (auto itr = path.begin(); itr != path.end() - 1; ++itr) {
+      auto nitr = itr + 1;
+      edges.emplace_back(edges_.at(std::make_tuple((*itr), (*nitr)))->id());
+    }
+    // Return vector of edges
+    return edges;
+  }
   return path;
 }
 
@@ -190,8 +205,11 @@ double cityscape::graph::Graph::path_cost(
   // Initialize path cost
   double cost = 0.;
 
-  // Container of nodes
-  if (ctr == cityscape::graph::Graph::Container::Nodes) {
+  // Container of edges
+  if (ctr == cityscape::graph::Graph::Container::Edges) {
+    for (const auto& edge : path) cost += edge_ids_.at(edge)->weight();
+  } else {
+    // Container of nodes
     for (auto itr = path.begin(); itr != path.end() - 1; ++itr) {
       auto nitr = itr + 1;
       cost += edges_.at(std::make_tuple((*itr), (*nitr)))->weight();

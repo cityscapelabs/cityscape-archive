@@ -127,17 +127,17 @@ TEST_CASE("Graph graph", "[graph]") {
     REQUIRE(graph->add_node(node5) == true);
 
     // Create edges
-    REQUIRE(graph->create_edge("osm0", "osm1", true) == true);
-    REQUIRE(graph->create_edge("osm0", "osm2", true) == true);
-    REQUIRE(graph->create_edge("osm0", "osm5", true) == true);
-    REQUIRE(graph->create_edge("osm1", "osm2", true) == true);
-    REQUIRE(graph->create_edge("osm1", "osm3", true) == true);
-    REQUIRE(graph->create_edge("osm2", "osm0", true) == true);
-    REQUIRE(graph->create_edge("osm2", "osm3", true) == true);
-    REQUIRE(graph->create_edge("osm2", "osm5", true) == true);
-    REQUIRE(graph->create_edge("osm3", "osm2", true) == true);
-    REQUIRE(graph->create_edge("osm3", "osm4", true) == true);
-    REQUIRE(graph->create_edge("osm4", "osm5", true) == true);
+    REQUIRE(graph->create_edge("osm0", "osm1", true) == true);  // ID 0
+    REQUIRE(graph->create_edge("osm0", "osm2", true) == true);  // ID 1
+    REQUIRE(graph->create_edge("osm0", "osm5", true) == true);  // ID 2
+    REQUIRE(graph->create_edge("osm1", "osm2", true) == true);  // ID 3
+    REQUIRE(graph->create_edge("osm1", "osm3", true) == true);  // ID 4
+    REQUIRE(graph->create_edge("osm2", "osm0", true) == true);  // ID 5
+    REQUIRE(graph->create_edge("osm2", "osm3", true) == true);  // ID 6
+    REQUIRE(graph->create_edge("osm2", "osm5", true) == true);  // ID 7
+    REQUIRE(graph->create_edge("osm3", "osm2", true) == true);  // ID 8
+    REQUIRE(graph->create_edge("osm3", "osm4", true) == true);  // ID 9
+    REQUIRE(graph->create_edge("osm4", "osm5", true) == true);  // ID 10
 
     // Add weights
     (graph->edge(0, 1))->weight(1.5);
@@ -165,23 +165,51 @@ TEST_CASE("Graph graph", "[graph]") {
     REQUIRE((graph->edge(3, 4))->weight() == Approx(6.2).epsilon(Tolerance));
     REQUIRE((graph->edge(4, 5))->weight() == Approx(9.7).epsilon(Tolerance));
 
-    // Run Dijkstra Priority Queue
-    const auto source = "osm0";
-    const auto destination = "osm5";
-    const auto path = graph->dijkstra(source, destination);
-    // Check distances
-    REQUIRE(path.size() == 5);
-    // Check path
-    REQUIRE(path.at(0) == 0);
-    REQUIRE(path.at(1) == 1);
-    REQUIRE(path.at(2) == 3);
-    REQUIRE(path.at(3) == 2);
-    REQUIRE(path.at(4) == 5);
+    SECTION("Dijkstra with return type as edges (default)") {
+      // Run Dijkstra Priority Queue
+      const auto source = "osm0";
+      const auto destination = "osm5";
 
-    // Cost of path (default as nodes)
-    REQUIRE(graph->path_cost(path) == Approx(9.6).epsilon(Tolerance));
-    // Cost of path setting explicity as nodes
-    REQUIRE(graph->path_cost(path, cityscape::graph::Graph::Container::Nodes) ==
-            Approx(9.6).epsilon(Tolerance));
+      // Compute shortest path with return type as edges
+      const auto path = graph->dijkstra(
+          source, destination, cityscape::graph::Graph::Container::Edges);
+      // Check distances
+      REQUIRE(path.size() == 4);
+      // Check path
+      REQUIRE(path.at(0) == 0);
+      REQUIRE(path.at(1) == 4);
+      REQUIRE(path.at(2) == 8);
+      REQUIRE(path.at(3) == 7);
+
+      // Compute shortest path with return type as default (edges)
+      path = graph->dijkstra(source, destination);
+      REQUIRE(path.size() == 4);
+
+      // Cost of path setting explicity as nodes
+      REQUIRE(graph->path_cost(path) == Approx(9.6).epsilon(Tolerance));
+    }
+
+    SECTION("Dijkstra with return type as nodes") {
+      // Run Dijkstra Priority Queue
+      const auto source = "osm0";
+      const auto destination = "osm5";
+
+      // Compute shortest path with return type as nodes
+      const auto path = graph->dijkstra(
+          source, destination, cityscape::graph::Graph::Container::Nodes);
+      // Check distances
+      REQUIRE(path.size() == 5);
+      // Check path
+      REQUIRE(path.at(0) == 0);
+      REQUIRE(path.at(1) == 1);
+      REQUIRE(path.at(2) == 3);
+      REQUIRE(path.at(3) == 2);
+      REQUIRE(path.at(4) == 5);
+
+      // Cost of path setting explicity as nodes
+      REQUIRE(
+          graph->path_cost(path, cityscape::graph::Graph::Container::Nodes) ==
+          Approx(9.6).epsilon(Tolerance));
+    }
   }
 }
