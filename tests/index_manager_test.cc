@@ -15,8 +15,8 @@ TEST_CASE("Check IndexManager class", "[index]") {
     // Check max index value
     REQUIRE(idx->max() == std::numeric_limits<cityscape::id_t>::max());
 
-    // Create new indexs
+    // Create new indices
+    REQUIRE(idx->create_index() == 0);
     REQUIRE(idx->create_index() == 1);
-    REQUIRE(idx->create_index() == 2);
   }
 }

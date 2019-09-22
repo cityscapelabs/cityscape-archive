@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "catch.hpp"
 
 #include "graph.h"
@@ -122,6 +120,7 @@ TEST_CASE("Graph graph", "[graph]") {
     auto node4 = std::make_shared<cityscape::graph::Node>(4, "osm4");
     auto node5 = std::make_shared<cityscape::graph::Node>(5, "osm5");
     REQUIRE(graph->add_node(node0) == true);
+    std::cout << "Nodal id: " << node0->id() << std::endl;
     REQUIRE(graph->add_node(node1) == true);
     REQUIRE(graph->add_node(node2) == true);
     REQUIRE(graph->add_node(node3) == true);
@@ -142,41 +141,36 @@ TEST_CASE("Graph graph", "[graph]") {
     REQUIRE(graph->create_edge("osm4", "osm5", true) == true);
 
     // Add weights
-    (graph->edge(1, 2))->weight(1.5);
-    (graph->edge(1, 2))->weight(1.5);
-    (graph->edge(1, 3))->weight(9.1);
-    (graph->edge(1, 6))->weight(14.3);
-    (graph->edge(2, 3))->weight(15.9);
-    (graph->edge(2, 4))->weight(5.5);
-    (graph->edge(3, 1))->weight(5.6);
-    (graph->edge(3, 4))->weight(11.6);
-    (graph->edge(3, 6))->weight(2.4);
-    (graph->edge(4, 3))->weight(0.2);
-    (graph->edge(4, 5))->weight(6.2);
-    (graph->edge(5, 6))->weight(9.7);
+    (graph->edge(0, 1))->weight(1.5);
+    (graph->edge(0, 2))->weight(9.1);
+    (graph->edge(0, 5))->weight(14.3);
+    (graph->edge(1, 2))->weight(15.9);
+    (graph->edge(1, 3))->weight(5.5);
+    (graph->edge(2, 0))->weight(5.6);
+    (graph->edge(2, 3))->weight(11.6);
+    (graph->edge(2, 5))->weight(2.4);
+    (graph->edge(3, 2))->weight(0.2);
+    (graph->edge(3, 4))->weight(6.2);
+    (graph->edge(4, 5))->weight(9.7);
 
     // Check weights
-    REQUIRE((graph->edge(1, 2))->weight() == Approx(1.5).epsilon(Tolerance));
-    REQUIRE((graph->edge(1, 2))->weight() == Approx(1.5).epsilon(Tolerance));
-    REQUIRE((graph->edge(1, 3))->weight() == Approx(9.1).epsilon(Tolerance));
-    REQUIRE((graph->edge(1, 6))->weight() == Approx(14.3).epsilon(Tolerance));
-    REQUIRE((graph->edge(2, 3))->weight() == Approx(15.9).epsilon(Tolerance));
-    REQUIRE((graph->edge(2, 4))->weight() == Approx(5.5).epsilon(Tolerance));
-    REQUIRE((graph->edge(3, 1))->weight() == Approx(5.6).epsilon(Tolerance));
-    REQUIRE((graph->edge(3, 4))->weight() == Approx(11.6).epsilon(Tolerance));
-    REQUIRE((graph->edge(3, 6))->weight() == Approx(2.4).epsilon(Tolerance));
-    REQUIRE((graph->edge(4, 3))->weight() == Approx(0.2).epsilon(Tolerance));
-    REQUIRE((graph->edge(4, 5))->weight() == Approx(6.2).epsilon(Tolerance));
-    REQUIRE((graph->edge(5, 6))->weight() == Approx(9.7).epsilon(Tolerance));
+    REQUIRE((graph->edge(0, 1))->weight() == Approx(1.5).epsilon(Tolerance));
+    REQUIRE((graph->edge(0, 2))->weight() == Approx(9.1).epsilon(Tolerance));
+    REQUIRE((graph->edge(0, 5))->weight() == Approx(14.3).epsilon(Tolerance));
+    REQUIRE((graph->edge(1, 2))->weight() == Approx(15.9).epsilon(Tolerance));
+    REQUIRE((graph->edge(1, 3))->weight() == Approx(5.5).epsilon(Tolerance));
+    REQUIRE((graph->edge(2, 0))->weight() == Approx(5.6).epsilon(Tolerance));
+    REQUIRE((graph->edge(2, 3))->weight() == Approx(11.6).epsilon(Tolerance));
+    REQUIRE((graph->edge(2, 5))->weight() == Approx(2.4).epsilon(Tolerance));
+    REQUIRE((graph->edge(3, 2))->weight() == Approx(0.2).epsilon(Tolerance));
+    REQUIRE((graph->edge(3, 4))->weight() == Approx(6.2).epsilon(Tolerance));
+    REQUIRE((graph->edge(4, 5))->weight() == Approx(9.7).epsilon(Tolerance));
 
     // Run Dijkstra Priority Queue
-    const auto source = "osm1";
-    const auto destination = "osm4";
+    const auto source = "osm0";
+    const auto destination = "osm5";
     const auto path = graph->dijkstra(source, destination);
     // Check distances
-    REQUIRE(path.size() == 3);
-
-    std::cout << "Path: " << source << "\t" << destination;
-    for (const auto edge : path) std::cout << "\t" << edge;
+    REQUIRE(path.size() == 5);
   }
 }

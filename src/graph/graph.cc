@@ -86,16 +86,15 @@ cityscape::id_t cityscape::graph::Graph::nedges() const {
 std::shared_ptr<cityscape::graph::Edge> cityscape::graph::Graph::edge(
     cityscape::id_t src, cityscape::id_t dest) const {
 
-  std::shared_ptr<cityscape::graph::Edge> edge;
+  std::shared_ptr<cityscape::graph::Edge> edge = nullptr;
   try {
     // Locate edge in graph
     auto eitr = edges_.find(std::make_tuple(src, dest));
     if (eitr != edges_.end())
       edge = (*eitr).second;
-    else {
-      edge = nullptr;
-      throw std::runtime_error("Invalid edge, does not exist\n");
-    }
+    else
+      throw std::runtime_error(
+          "Invalid edge, does not exist, returning nullptr\n");
   } catch (std::exception& exception) {
     std::cout << "Exception: " << exception.what() << "\n";
   }
@@ -181,15 +180,14 @@ std::vector<cityscape::id_t> cityscape::graph::Graph::dijkstra(
   // Reverse to arrange path from source to destination
   std::reverse(std::begin(path), std::end(path));
 
-  double cost = 0;
-  for (cityscape::id_t i = 0; i < path.size() - 1; ++i) {
-    cost += edges_.at(std::make_tuple(path[i] - 1, path[i + 1] - 1))->weight();
-    std::cout
-        << "Edge: " << path[i] << " -> " << path[i + 1] << " cost: "
-        << edges_.at(std::make_tuple(path[i] - 1, path[i + 1] - 1))->weight()
-        << std::endl;
-  }
-  std::cout << "Path cost: " << cost << std::endl;
+  // double cost = 0;
+  // for (cityscape::id_t i = 0; i < path.size() - 1; ++i) {
+  //   cost += edges_.at(std::make_tuple(path[i], path[i + 1]))->weight();
+  //   std::cout << "Edge: " << path[i] << " -> " << path[i + 1] << " cost: "
+  //             << edges_.at(std::make_tuple(path[i], path[i + 1]))->weight()
+  //             << std::endl;
+  // }
+  // std::cout << "Path cost: " << cost << std::endl;
 
   return path;
 }
