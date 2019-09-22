@@ -180,12 +180,12 @@ TEST_CASE("Graph graph", "[graph]") {
       REQUIRE(path.at(1) == 4);
       REQUIRE(path.at(2) == 8);
       REQUIRE(path.at(3) == 7);
+      // Cost of path setting explicity as edges
+      REQUIRE(
+          graph->path_cost(path, cityscape::graph::Graph::Container::Edges) ==
+          Approx(9.6).epsilon(Tolerance));
 
-      // Compute shortest path with return type as default (edges)
-      path = graph->dijkstra(source, destination);
-      REQUIRE(path.size() == 4);
-
-      // Cost of path setting explicity as nodes
+      // Cost of path (default as edges)
       REQUIRE(graph->path_cost(path) == Approx(9.6).epsilon(Tolerance));
     }
 
