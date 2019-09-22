@@ -18,6 +18,9 @@ namespace graph {
 //! \brief Base class of graph
 class Graph {
  public:
+  //! Container type
+  enum Container { Nodes, Edges };
+
   //! Constructor with a unique graph id, tag and initialize idx
   //! \param[in] id Index of the graph
   //! \param[in] tag Tag to categorize graph (default is empty)
@@ -61,6 +64,13 @@ class Graph {
   //! \retval path Vertices of the path from source to destination
   std::vector<cityscape::id_t> dijkstra(const std::string& src,
                                         const std::string& dest) const;
+
+  // Compute cost of shortest paths from src to a vertex
+  //! \param[in] path Vector of vertices or edges (default is node)
+  //! \param[in] ctr Container type (default is node)
+  //! \retval cost Cost of the path
+  double path_cost(const std::vector<cityscape::id_t>& path,
+                   Container ctr = Container::Nodes) const;
 
  private:
   //! Graph id

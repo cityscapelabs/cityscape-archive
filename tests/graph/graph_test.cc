@@ -120,7 +120,6 @@ TEST_CASE("Graph graph", "[graph]") {
     auto node4 = std::make_shared<cityscape::graph::Node>(4, "osm4");
     auto node5 = std::make_shared<cityscape::graph::Node>(5, "osm5");
     REQUIRE(graph->add_node(node0) == true);
-    std::cout << "Nodal id: " << node0->id() << std::endl;
     REQUIRE(graph->add_node(node1) == true);
     REQUIRE(graph->add_node(node2) == true);
     REQUIRE(graph->add_node(node3) == true);
@@ -172,5 +171,14 @@ TEST_CASE("Graph graph", "[graph]") {
     const auto path = graph->dijkstra(source, destination);
     // Check distances
     REQUIRE(path.size() == 5);
+    // Check path
+    REQUIRE(path.at(0) == 0);
+    REQUIRE(path.at(1) == 1);
+    REQUIRE(path.at(2) == 3);
+    REQUIRE(path.at(3) == 2);
+    REQUIRE(path.at(4) == 5);
+
+    // Cost of path
+    REQUIRE(graph->path_cost(path) == Approx(9.6).epsilon(Tolerance));
   }
 }

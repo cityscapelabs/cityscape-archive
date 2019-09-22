@@ -179,15 +179,23 @@ std::vector<cityscape::id_t> cityscape::graph::Graph::dijkstra(
   path.emplace_back(source);
   // Reverse to arrange path from source to destination
   std::reverse(std::begin(path), std::end(path));
-
-  // double cost = 0;
-  // for (cityscape::id_t i = 0; i < path.size() - 1; ++i) {
-  //   cost += edges_.at(std::make_tuple(path[i], path[i + 1]))->weight();
-  //   std::cout << "Edge: " << path[i] << " -> " << path[i + 1] << " cost: "
-  //             << edges_.at(std::make_tuple(path[i], path[i + 1]))->weight()
-  //             << std::endl;
-  // }
-  // std::cout << "Path cost: " << cost << std::endl;
-
   return path;
+}
+
+// Compute cost of shortest paths from src to a vertex
+double cityscape::graph::Graph::path_cost(
+    const std::vector<cityscape::id_t>& path,
+    cityscape::graph::Graph::Container ctr) const {
+
+  // Initialize path cost
+  double cost = 0.;
+
+  // Container of nodes
+  if (ctr == cityscape::graph::Graph::Container::Nodes) {
+    for (auto itr = path.begin(); itr != path.end() - 1; ++itr) {
+      auto nitr = itr + 1;
+      cost += edges_.at(std::make_tuple((*itr), (*nitr)))->weight();
+    }
+  }
+  return cost;
 }
