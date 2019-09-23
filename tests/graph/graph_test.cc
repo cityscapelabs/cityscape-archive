@@ -185,8 +185,12 @@ TEST_CASE("Graph graph", "[graph]") {
           graph->path_cost(path, cityscape::graph::Graph::Container::Edges) ==
           Approx(9.6).epsilon(Tolerance));
 
+      // Compute shortest path with default (edges)
+      const auto path0 = graph->dijkstra(source, destination);
+      // Check distances
+      REQUIRE(path0.size() == 4);
       // Cost of path (default as edges)
-      REQUIRE(graph->path_cost(path) == Approx(9.6).epsilon(Tolerance));
+      REQUIRE(graph->path_cost(path0) == Approx(9.6).epsilon(Tolerance));
     }
 
     SECTION("Dijkstra with return type as nodes") {
