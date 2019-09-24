@@ -1,6 +1,9 @@
 #ifndef CITYSCAPE_SPATIAL_POINT_H_
 #define CITYSCAPE_SPATIAL_POINT_H_
 
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/register/point.hpp>
+
 #include <array>
 #include <limits>
 #include <memory>
@@ -51,5 +54,9 @@ class Point : public cityscape::graph::Node {
 };
 }  // namespace spatial
 }  // namespace cityscape
+
+// Register Point as a 2D Point
+BOOST_GEOMETRY_REGISTER_POINT_2D(cityscape::spatial::Point, double,
+                                 cs::cartesian, x, y);
 
 #endif  // CITYSCAPE_SPATIAL_POINT_H_

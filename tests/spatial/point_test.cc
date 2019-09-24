@@ -58,5 +58,17 @@ TEST_CASE("Spatial point", "[spatial][point]") {
       REQUIRE(point->check_tag("") == false);
       REQUIRE(point->check_tag("roud") == false);
     }
+
+    SECTION("Test Boost Geometry distances") {
+      // Coordinates
+      std::array<double, 2> coords1 = {1., 1.};
+      cityscape::spatial::Point p1{1, "s1", coords1};
+
+      std::array<double, 2> coords2 = {2., 2.};
+      cityscape::spatial::Point p2{2, "s2", coords2};
+
+      REQUIRE(boost::geometry::distance(p1, p2) ==
+              Approx(1.414213562).epsilon(Tolerance));
+    }
   }
 }
