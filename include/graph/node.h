@@ -26,8 +26,8 @@ class Node {
   //! \param[in] id Index of the edge
   //! \param[in] name Unique name of the node
   //! \param[in] tag Tag to categorize node (default is empty)
-  explicit Node(cityscape::id_t id, const std::string& name,
-                const std::string& tag = std::string());
+  Node(cityscape::id_t id, const std::string& name,
+       const std::string& tag = std::string());
 
   //! Node id
   cityscape::id_t id() const;
@@ -49,7 +49,7 @@ class Node {
   //! \retval out_edges Return vector of outgoing edges
   std::vector<std::shared_ptr<cityscape::graph::Edge>> out_edges() const;
 
- private:
+ protected:
   //! Node id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
   //! Tags

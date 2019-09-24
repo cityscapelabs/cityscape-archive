@@ -45,6 +45,7 @@ include_directories(BEFORE
   ${cityscape_SOURCE_DIR}/external/
   ${cityscape_SOURCE_DIR}/include/
   ${cityscape_SOURCE_DIR}/include/graph/
+  ${cityscape_SOURCE_DIR}/include/spatial/
 )
 
 # cityscape executable
@@ -53,7 +54,7 @@ SET(cityscape_src
   ${cityscape_SOURCE_DIR}/src/graph/graph.cc
   ${cityscape_SOURCE_DIR}/src/graph/node.cc
   ${cityscape_SOURCE_DIR}/src/index_manager.cc
-
+  ${cityscape_SOURCE_DIR}/src/spatial/point.cc
 )
 #add_executable(cityscape ${cityscape_SOURCE_DIR}/src/main.cc)
 
@@ -64,6 +65,7 @@ if(CITYSCAPE_BUILD_TESTING)
     ${cityscape_SOURCE_DIR}/tests/graph/graph_test.cc
     ${cityscape_SOURCE_DIR}/tests/graph/node_test.cc
     ${cityscape_SOURCE_DIR}/tests/index_manager_test.cc
+    ${cityscape_SOURCE_DIR}/tests/spatial/point_test.cc
     ${cityscape_SOURCE_DIR}/tests/main_test.cc
     )
   add_executable(cityscapetest ${cityscape_src} ${cityscape_test_src})
