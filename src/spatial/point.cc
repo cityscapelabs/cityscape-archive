@@ -1,9 +1,9 @@
 #include "point.h"
 
 //! Constructor with unique node id, name, coordinates and tag
-cityscape::spatial::Point::Point(cityscape::id_t id, const std::string &name,
+cityscape::spatial::Point::Point(cityscape::id_t id, const std::string& name,
                                  std::array<double, 2> coordinates,
-                                 const std::string &tag)
+                                 const std::string& tag)
     : cityscape::graph::Node(id, name, tag) {
   coordinates_ = coordinates;
   x = coordinates_.at(0);
