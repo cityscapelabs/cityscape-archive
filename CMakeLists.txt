@@ -38,7 +38,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 # Boost Archive
 find_package(Boost REQUIRED COMPONENTS filesystem system)
 include_directories(${BOOST_INCLUDE_DIRS})
-link_libraries(${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
+link_libraries(${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} s2)
 
 # Include directories
 include_directories(BEFORE
@@ -66,6 +66,8 @@ if(CITYSCAPE_BUILD_TESTING)
     ${cityscape_SOURCE_DIR}/tests/graph/node_test.cc
     ${cityscape_SOURCE_DIR}/tests/index_manager_test.cc
     ${cityscape_SOURCE_DIR}/tests/spatial/point_test.cc
+          ${cityscape_SOURCE_DIR}/tests/spatial/indexer_test.cc
+
     ${cityscape_SOURCE_DIR}/tests/main_test.cc
     )
   add_executable(cityscapetest ${cityscape_src} ${cityscape_test_src})
