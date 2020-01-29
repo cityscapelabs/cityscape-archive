@@ -21,10 +21,10 @@ TEST_CASE("Spatial point", "[spatial][point]") {
     REQUIRE(point->name() == name);
 
     // Check coordinates
-    auto coords = point->coordinates();
-    REQUIRE(coords.size() == 2);
-    REQUIRE(coords.at(0) == Approx(coordinates.at(0)).epsilon(Tolerance));
-    REQUIRE(coords.at(1) == Approx(coordinates.at(1)).epsilon(Tolerance));
+    auto x = point->get_x();
+    auto y = point->get_y();
+    REQUIRE(x == Approx(coordinates.at(0)).epsilon(Tolerance));
+    REQUIRE(y == Approx(coordinates.at(1)).epsilon(Tolerance));
 
     // Check nodal ids
     SECTION("Point id max") {
