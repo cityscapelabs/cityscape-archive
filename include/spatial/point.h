@@ -41,7 +41,6 @@ class Point : public cityscape::graph::Node {
   //! Set coordinate y
   void set_y(double y);
 
-
  protected:
   //! Point id
   using cityscape::graph::Node::id_;
@@ -62,6 +61,7 @@ class Point : public cityscape::graph::Node {
 
 // Register Point as a 2D Point
 BOOST_GEOMETRY_REGISTER_POINT_2D_GET_SET(cityscape::spatial::Point, double,
-                                 cs::cartesian, get_x, get_y, set_x, set_y);
+                                         cs::cartesian, get_x, get_y, set_x,
+                                         set_y);
 
 #endif  // CITYSCAPE_SPATIAL_POINT_H_
