@@ -29,13 +29,17 @@ class Point : public cityscape::graph::Node {
         std::array<double, 2> coordinates,
         const std::string& tag = std::string());
 
-  //! Location coordinates for BOOST
-  double x;
-  double y;
+  //! Return x coordinates
+  //! \retval x coordinate of the point
+  double get_x() const;
+  //! Return y coordinates
+  //! \retval y coordinate of the point
+  double get_y() const;
 
-  //! Return coordinates
-  //! \retval coordinates_ Coordinates of point
-  std::array<double, 2> coordinates() const;
+  //! Set coordinate x
+  void set_x(double x);
+  //! Set coordinate y
+  void set_y(double y);
 
  protected:
   //! Point id
@@ -56,7 +60,8 @@ class Point : public cityscape::graph::Node {
 }  // namespace cityscape
 
 // Register Point as a 2D Point
-BOOST_GEOMETRY_REGISTER_POINT_2D(cityscape::spatial::Point, double,
-                                 cs::cartesian, x, y);
+BOOST_GEOMETRY_REGISTER_POINT_2D_GET_SET(cityscape::spatial::Point, double,
+                                         cs::cartesian, get_x, get_y, set_x,
+                                         set_y);
 
 #endif  // CITYSCAPE_SPATIAL_POINT_H_

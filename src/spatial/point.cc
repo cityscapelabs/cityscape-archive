@@ -6,11 +6,16 @@ cityscape::spatial::Point::Point(cityscape::id_t id, const std::string& name,
                                  const std::string& tag)
     : cityscape::graph::Node(id, name, tag) {
   coordinates_ = coordinates;
-  x = coordinates_.at(0);
-  y = coordinates_.at(1);
 }
 
-//! Return coordinates of the point
-std::array<double, 2> cityscape::spatial::Point::coordinates() const {
-  return coordinates_;
-}
+//! Return coordinate x of the point
+double cityscape::spatial::Point::get_x() const { return coordinates_.at(0); }
+
+//! Return coordinate y of the point
+double cityscape::spatial::Point::get_y() const { return coordinates_.at(1); }
+
+//! Set coordinate x
+void cityscape::spatial::Point::set_x(double x) { coordinates_[0] = x; }
+
+//! Set coordinate y
+void cityscape::spatial::Point::set_y(double y) { coordinates_[1] = y; }
