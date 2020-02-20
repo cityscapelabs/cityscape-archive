@@ -1,5 +1,4 @@
 #include "catch.hpp"
-
 #include <chrono>
 
 // to store queries results
@@ -8,7 +7,7 @@
 #include "spatial_index.h"
 
 // Check Spatial point class
-TEST_CASE("Spatial point index", "[spatial][point]") {
+TEST_CASE("Spatial point index", "[spatial][index]") {
   typedef cityscape::spatial::Point Point;
 
   const double Tolerance = 1.E-7;
@@ -22,45 +21,43 @@ TEST_CASE("Spatial point index", "[spatial][point]") {
 
   SECTION("spatial index with no packing ") {
     // create the rtree using default constructor
-    auto index = std::make_shared<cityscape::spatial::SpatialIndex>();
+    auto index = std::make_shared<
+        cityscape::spatial::SpatialIndex<std::shared_ptr<Point>>>();
 
-    for (unsigned i = 0; i < n; ++i) {
-      auto p = points.at(i);
-      // insert new value
-      index->insert(std::make_pair(p, i));
+    for (const auto& p : points) {
+      index->insert(std::make_shared<Point>(p));
     }
-
     REQUIRE(index->size() == n);
 
     // find nearest values to a point
     auto result_n = index->knn(query_p, 1);
-    auto closet_p = result_n.at(0).first;
+    auto closet_p = result_n.at(0);
 
     // Test query result id
-    REQUIRE(closet_p.id() == 0);
+    REQUIRE(closet_p->id() == 0);
     // Check query result name
-    REQUIRE(closet_p.name() == "spatial0");
+    REQUIRE(closet_p->name() == "spatial0");
   }
 
   SECTION("Index with packing") {
-    std::vector<cityscape::spatial::rtree_leaf_point> leaves;
+    std::vector<std::shared_ptr<Point>> leaves;
     // create some values
-    for (unsigned i = 0; i < n; ++i) {
-      auto p = points.at(i);
-      // insert new value
-      leaves.emplace_back(std::make_pair(p, i));
+    for (const auto& p : points) {
+      leaves.emplace_back(std::make_shared<Point>(p));
     }
+
     // create the index using packing algorithm
-    auto index = std::make_shared<cityscape::spatial::SpatialIndex>(leaves);
+    auto index = std::make_shared<
+        cityscape::spatial::SpatialIndex<std::shared_ptr<Point>>>(leaves);
     REQUIRE(index->size() == n);
 
     // find nearest values to a point
     auto result_n = index->knn(query_p, 1);
-    auto closet_p = result_n.at(0).first;
+    auto closet_p = result_n.at(0);
 
     // Test query result id
-    REQUIRE(closet_p.id() == 0);
+    REQUIRE(closet_p->id() == 0);
     // Check query result name
-    REQUIRE(closet_p.name() == "spatial0");
+    REQUIRE(closet_p->name() == "spatial0");
   }
 }
