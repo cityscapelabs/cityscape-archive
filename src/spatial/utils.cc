@@ -2,7 +2,7 @@
 
 std::map<std::shared_ptr<cityscape::spatial::Point>,
          std::shared_ptr<cityscape::spatial::Point>>
-    cityscape::spatial::merge_points(
+    cityscape::spatial::map_points(
         const std::vector<std::shared_ptr<cityscape::spatial::Point>>&
             src_points,
         const std::vector<std::shared_ptr<cityscape::spatial::Point>>&

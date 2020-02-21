@@ -14,8 +14,8 @@ namespace spatial {
 //! dest points
 std::map<std::shared_ptr<cityscape::spatial::Point>,
          std::shared_ptr<cityscape::spatial::Point>>
-    merge_points(const std::vector<std::shared_ptr<cityscape::spatial::Point>>&
-                     src_points,
+    map_points(const std::vector<std::shared_ptr<cityscape::spatial::Point>>&
+                   src_points,
                  const std::vector<std::shared_ptr<cityscape::spatial::Point>>&
                      dst_points);
 }  // namespace spatial

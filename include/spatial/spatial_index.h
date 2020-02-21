@@ -15,7 +15,6 @@ namespace bgi = boost::geometry::index;
 namespace boost {
 namespace geometry {
 namespace index {
-
 // indexable to store pointers in rtree
 template <typename Leaf>
 struct indexable<std::shared_ptr<Leaf>> {
@@ -44,6 +43,7 @@ class SpatialIndex {
   SpatialIndex() = default;
 
   //! Construct spatial index through packing algorithm
+  //! \param[in] values spatial objects that need to be indexed
   explicit SpatialIndex(const std::vector<Leaf>& values);
 
   //! Insert a point

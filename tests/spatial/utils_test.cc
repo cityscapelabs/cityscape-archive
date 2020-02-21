@@ -19,7 +19,7 @@ TEST_CASE("Spatial utills check", "[spatial][utils]") {
       std::make_shared<Point>(Point(2, "spatial2", {1.75, 2.5}))};
 
   SECTION("Merging two points list") {
-    auto map = cityscape::spatial::merge_points(src_points, dst_points);
+    auto map = cityscape::spatial::map_points(src_points, dst_points);
     REQUIRE(map[src_points[0]]->id() == 1);
     REQUIRE(map[src_points[1]]->id() == 2);
     REQUIRE(map[src_points[2]]->id() == 0);
