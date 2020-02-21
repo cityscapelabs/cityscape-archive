@@ -16,8 +16,8 @@ std::map<std::shared_ptr<cityscape::spatial::Point>,
          std::shared_ptr<cityscape::spatial::Point>>
     map_points(const std::vector<std::shared_ptr<cityscape::spatial::Point>>&
                    src_points,
-                 const std::vector<std::shared_ptr<cityscape::spatial::Point>>&
-                     dst_points);
+               const std::vector<std::shared_ptr<cityscape::spatial::Point>>&
+                   dst_points);
 }  // namespace spatial
 }  // namespace cityscape
 
