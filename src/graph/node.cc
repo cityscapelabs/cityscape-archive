@@ -37,8 +37,14 @@ void cityscape::graph::Node::add_edge(
   }
 }
 
+//! Add tag to node
+void cityscape::graph::Node::add_tag(const std::string& tag) {
+  if (!tag.empty()) tags_.insert(tag);
+}
+
 //! Return outgoing edges
 std::vector<std::shared_ptr<cityscape::graph::Edge>>
     cityscape::graph::Node::out_edges() const {
   return out_edges_;
 }
+

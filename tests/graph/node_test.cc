@@ -45,6 +45,11 @@ TEST_CASE("Graph node", "[graph][node]") {
       REQUIRE(node->check_tag(tag) == true);
       REQUIRE(node->check_tag("") == false);
       REQUIRE(node->check_tag("pipe") == false);
+
+      // Add new Tag
+      std::string new_tag = "pipe";
+      node->add_tag(new_tag);
+      REQUIRE(node->check_tag("pipe") == true);
     }
   }
 }
