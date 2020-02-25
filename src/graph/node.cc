@@ -47,4 +47,3 @@ std::vector<std::shared_ptr<cityscape::graph::Edge>>
     cityscape::graph::Node::out_edges() const {
   return out_edges_;
 }
-
