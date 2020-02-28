@@ -40,4 +40,14 @@ TEST_CASE("Spatial utills check", "[spatial][utils]") {
     REQUIRE(dst_points[1]->check_tag("school0") == false);
     REQUIRE(dst_points[2]->check_tag("school1") == true);
   }
+
+  SECTION("Construct points from csv file") {
+    cityscape::spatial::CSV_point_info csv_info(
+        "../tests/test_data/csv_test.csv", "id", "x", "y", "name", "tag");
+    auto point_list = cityscape::spatial::construct_points_csv(csv_info);
+
+    REQUIRE(point_list.size() == 3);
+    REQUIRE(point_list[1]->id() == 1);
+    REQUIRE(point_list[2]->check_tag("\"a fair place\"") == true);
+  }
 }

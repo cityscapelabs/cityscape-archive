@@ -1,4 +1,4 @@
-id,x,y
-0,100,110
-1,200,210
-2,300,310
+id,x,y,name,tag
+0,100,110,point0,"a good place"
+1,200,210,point1,"a bad place"
+2,300,310,point2,"a fair place"

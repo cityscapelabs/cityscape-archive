@@ -40,6 +40,21 @@ find_package(Boost REQUIRED COMPONENTS filesystem system)
 include_directories(${BOOST_INCLUDE_DIRS})
 link_libraries(${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 
+# MPI
+find_package(MPI)
+if (MPI_FOUND)
+  add_definitions("-DUSE_MPI")
+  include_directories(${MPI_CXX_INCLUDE_DIRS})
+  link_libraries(${MPI_CXX_LIBRARIES})
+endif ()
+
+# OpenMP
+find_package(OpenMP REQUIRED)
+if (OPENMP_FOUND)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif ()
+
+
 # Include directories
 include_directories(BEFORE
   ${cityscape_SOURCE_DIR}/external/
