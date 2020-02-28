@@ -48,11 +48,16 @@ if (MPI_FOUND)
   link_libraries(${MPI_CXX_LIBRARIES})
 endif ()
 
-# OpenMP
-find_package(OpenMP REQUIRED)
-if (OPENMP_FOUND)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-endif ()
+# Pthreads
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+link_libraries(Threads::Threads)
+
+## OpenMP
+#find_package(OpenMP REQUIRED)
+#if (OPENMP_FOUND)
+#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+#endif ()
 
 
 # Include directories
