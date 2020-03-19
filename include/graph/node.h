@@ -39,11 +39,18 @@ class Node {
   //! Return name
   std::string name() const;
 
+  //! Return tag
+  std::set<std::string> tag() const { return tags_; }
+
   //! Add edge
   //! \param[in] edge Edge pointer
   //! \param[in] dir Direction of edge
   void add_edge(const std::shared_ptr<cityscape::graph::Edge>& edge,
                 Direction dir);
+
+  //! Add tag
+  //! \param[in] tag New tag
+  void add_tag(const std::string& tag);
 
   //! Out edges
   //! \retval out_edges Return vector of outgoing edges
