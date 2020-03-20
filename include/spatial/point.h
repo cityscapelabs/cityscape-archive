@@ -1,8 +1,8 @@
 #ifndef CITYSCAPE_SPATIAL_POINT_H_
 #define CITYSCAPE_SPATIAL_POINT_H_
 
-#include <boost/geometry/geometry.hpp>
 #include <boost/geometry/geometries/register/point.hpp>
+#include <boost/geometry/geometry.hpp>
 
 #include <array>
 #include <limits>
