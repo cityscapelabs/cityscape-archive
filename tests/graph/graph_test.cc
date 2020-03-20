@@ -80,10 +80,14 @@ TEST_CASE("Graph graph", "[graph]") {
         // Create edge 0 -> 1
         REQUIRE(graph->create_edge("osm0", "osm1", true) == true);
         REQUIRE(graph->nedges() == 1);
+        REQUIRE(graph->edge(0, 1)->src()->connect_degree() == 1);
+        REQUIRE(graph->edge(0, 1)->dest()->connect_degree() == 1);
 
         // Create edge 1 -> 0
         REQUIRE(graph->create_edge("osm1", "osm0", true) == true);
         REQUIRE(graph->nedges() == 2);
+        REQUIRE(graph->edge(0, 1)->src()->connect_degree() == 2);
+        REQUIRE(graph->edge(0, 1)->dest()->connect_degree() == 2);
 
         // Non-existant edge
         REQUIRE(graph->create_edge("osm0", "osm2", true) == false);
@@ -91,6 +95,8 @@ TEST_CASE("Graph graph", "[graph]") {
         // Duplicate nodes
         REQUIRE(graph->create_edge("osm0", "osm0", true) == false);
         REQUIRE(graph->nedges() == 2);
+        REQUIRE(graph->edge(0, 1)->src()->connect_degree() == 2);
+        REQUIRE(graph->edge(0, 1)->dest()->connect_degree() == 2);
       }
 
       // Undirected edges

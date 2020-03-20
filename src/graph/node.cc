@@ -35,6 +35,7 @@ void cityscape::graph::Node::add_edge(
     in_edges_.emplace_back(edge);
     out_edges_.emplace_back(edge);
   }
+  degree_ += 1;
 }
 
 //! Add tag to node

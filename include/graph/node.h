@@ -42,6 +42,9 @@ class Node {
   //! Return tag
   std::set<std::string> tag() const { return tags_; }
 
+  //! Return connectivity degree
+  cityscape::id_t connect_degree() const { return degree_; }
+
   //! Add edge
   //! \param[in] edge Edge pointer
   //! \param[in] dir Direction of edge
@@ -63,6 +66,8 @@ class Node {
   std::set<std::string> tags_;
   //! Name
   std::string name_;
+  //! Connectivity degree
+  cityscape::id_t degree_;
   //! In-edges
   std::vector<std::shared_ptr<cityscape::graph::Edge>> in_edges_;
   //! Out-edges
