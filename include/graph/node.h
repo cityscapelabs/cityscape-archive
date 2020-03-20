@@ -67,7 +67,7 @@ class Node {
   //! Name
   std::string name_;
   //! Connectivity degree
-  cityscape::id_t degree_;
+  cityscape::id_t degree_{0};
   //! In-edges
   std::vector<std::shared_ptr<cityscape::graph::Edge>> in_edges_;
   //! Out-edges
