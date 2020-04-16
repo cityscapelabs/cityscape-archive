@@ -9,6 +9,6 @@ cityscape::spatial::Line::Line(
   src_ = std::const_pointer_cast<const cityscape::spatial::Point>(src);
   dest_ = std::const_pointer_cast<const cityscape::spatial::Point>(dest);
 
-  points_.push_back(src.get());
-  points_.push_back(dest.get());
+  points.push_back(src.get());
+  points.push_back(dest.get());
 }

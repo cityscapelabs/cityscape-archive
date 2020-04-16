@@ -24,20 +24,20 @@ struct range_const_iterator<QLineString> {
 namespace cityscape {
 namespace spatial {
 inline std::vector<QPoint*>::iterator range_begin(QLineString& qls) {
-  return qls.points().begin();
+  return qls.points.begin();
 }
 
 inline std::vector<QPoint*>::iterator range_end(QLineString& qls) {
-  return qls.points().end();
+  return qls.points.end();
 }
 
 inline std::vector<QPoint*>::const_iterator range_begin(
     const QLineString& qls) {
-  return qls.points().begin();
+  return qls.points.begin();
 }
 
 inline std::vector<QPoint*>::const_iterator range_end(const QLineString& qls) {
-  return qls.points().end();
+  return qls.points.end();
 }
 }  // namespace spatial
 }  // namespace cityscape

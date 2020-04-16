@@ -30,7 +30,8 @@ class Line : public cityscape::graph::Edge {
   }
 
   //! Points vector (for boost usage)
-  std::vector<cityscape::spatial::Point*> points() const { return points_; };
+//  std::vector<cityscape::spatial::Point*> points() const { return points_; };
+    std::vector<cityscape::spatial::Point*> points;
 
  protected:
   //! Point id
