@@ -47,13 +47,15 @@ class Edge {
   //! Destination node
   std::shared_ptr<const cityscape::graph::Node> dest() const;
 
- private:
+ protected:
   //! Edge id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
   //! Tags
   std::set<std::string> tags_;
   //! Weight
   double weight_{0.};
+
+ private:
   //! Source node
   std::shared_ptr<const cityscape::graph::Node> src_;
   //! Destination node

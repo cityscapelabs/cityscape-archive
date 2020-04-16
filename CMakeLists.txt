@@ -67,6 +67,7 @@ include_directories(BEFORE
   ${cityscape_SOURCE_DIR}/include/graph/
   ${cityscape_SOURCE_DIR}/include/spatial/
         ${cityscape_SOURCE_DIR}/include/io/
+        ${cityscape_SOURCE_DIR}/tests/test_data/
 )
 
 # cityscape executable
@@ -77,6 +78,7 @@ SET(cityscape_src
   ${cityscape_SOURCE_DIR}/src/index_manager.cc
         ${cityscape_SOURCE_DIR}/src/csv_reader.cc
   ${cityscape_SOURCE_DIR}/src/spatial/point.cc
+        ${cityscape_SOURCE_DIR}/src/spatial/line.cc
         ${cityscape_SOURCE_DIR}/src/spatial/utils.cc
 )
 #add_executable(cityscape ${cityscape_SOURCE_DIR}/src/main.cc)
@@ -89,8 +91,10 @@ if(CITYSCAPE_BUILD_TESTING)
     ${cityscape_SOURCE_DIR}/tests/graph/node_test.cc
     ${cityscape_SOURCE_DIR}/tests/index_manager_test.cc
     ${cityscape_SOURCE_DIR}/tests/spatial/point_test.cc
+          ${cityscape_SOURCE_DIR}/tests/spatial/line_test.cc
           ${cityscape_SOURCE_DIR}/tests/spatial/spatial_index_test.cc
           ${cityscape_SOURCE_DIR}/tests/spatial/utils_test.cc
+#          ${cityscape_SOURCE_DIR}/tests/spatial/bay_pipes.cc
           ${cityscape_SOURCE_DIR}/tests/csv_reader_test.cc
     ${cityscape_SOURCE_DIR}/tests/main_test.cc
     )
