@@ -17,7 +17,7 @@ TEST_CASE("Spatial line", "[spatial][line]") {
     const std::string name1 = "spatial1";
     // Coordinates
     const std::array<double, 2> coordinates0 = {0, 0};
-    const std::array<double, 2> coordinates1 = {0, 1};
+    const std::array<double, 2> coordinates1 = {0, 10};
     // Create two points
     auto src =
         std::make_shared<cityscape::spatial::Point>(nid0, name0, coordinates0);
@@ -35,6 +35,6 @@ TEST_CASE("Spatial line", "[spatial][line]") {
     REQUIRE(line->dest()->get_y() == dest->get_y());
     REQUIRE(line->weight() == Approx(13.756).epsilon(Tolerance));
     // check boost feature
-    REQUIRE(boost::geometry::length(*line) == Approx(1).epsilon(Tolerance));
+    REQUIRE(boost::geometry::length(*line) == Approx(10).epsilon(Tolerance));
   }
 }
