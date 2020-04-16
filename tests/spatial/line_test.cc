@@ -36,5 +36,7 @@ TEST_CASE("Spatial line", "[spatial][line]") {
     REQUIRE(line->weight() == Approx(13.756).epsilon(Tolerance));
     // check boost feature
     REQUIRE(boost::geometry::length(*line) == Approx(10).epsilon(Tolerance));
+    std::cout << "line: " << line->points()[0]->id() << ";"
+              << line->points()[1]->id() << std::endl;
   }
 }
