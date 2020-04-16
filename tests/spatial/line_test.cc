@@ -1,6 +1,7 @@
 #include "catch.hpp"
 
 #include "line.h"
+#include "spatial_index.h"
 #include <boost/geometry.hpp>
 #include <iostream>
 
@@ -37,6 +38,13 @@ TEST_CASE("Spatial line", "[spatial][line]") {
     // check boost feature
     std::cout << "line: " << line->points()[0]->id() << ";"
               << line->points()[1]->id() << std::endl;
+    std::cout << bg::wkt<cityscape::spatial::Line>(*line) << std::endl;
     REQUIRE(boost::geometry::length(*line) == Approx(10).epsilon(Tolerance));
+
+
+
+    //    auto index = std::make_shared<cityscape::spatial::SpatialIndex<
+    //        std::shared_ptr<cityscape::spatial::Line>>>();
+    //    index->insert(line);
+      }
   }
-}
