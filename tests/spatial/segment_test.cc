@@ -37,8 +37,7 @@ TEST_CASE("Spatial line", "[spatial][line]") {
 
   // Test segment
   SECTION("Test seg basic properties") {
-
-    // check properties
+    // check basic properties
     REQUIRE(seg->src()->id() == src->id());
     REQUIRE(seg->dest()->get_y() == dest->get_y());
     REQUIRE(seg->weight() == Approx(13.756).epsilon(Tolerance));
@@ -55,6 +54,10 @@ TEST_CASE("Spatial line", "[spatial][line]") {
     REQUIRE(boost::geometry::distance(*seg, *seg) ==
             Approx(0).epsilon(Tolerance));
     REQUIRE(boost::geometry::distance(*test_p, *seg) ==
+            Approx(1).epsilon(Tolerance));
+    // test on using with boost point
+    bg::model::point<double, 2, bg::cs::cartesian> point2(1.0, 2.0);
+    REQUIRE(boost::geometry::distance(point2, *seg) ==
             Approx(1).epsilon(Tolerance));
   }
 }
