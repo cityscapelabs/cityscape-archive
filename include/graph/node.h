@@ -22,6 +22,7 @@ enum Direction { Any, Outgoing, Incoming };
 //! \brief Base class of a graph node (vertex)
 class Node {
  public:
+  Node() = default;
   //! Constructor with unique node id
   //! \param[in] id Index of the edge
   //! \param[in] name Unique name of the node

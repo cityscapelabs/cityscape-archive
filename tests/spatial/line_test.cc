@@ -3,13 +3,15 @@
 #include "line.h"
 #include "spatial_index.h"
 #include <boost/geometry.hpp>
+#include <boost/geometry/geometries/box.hpp>
 #include <iostream>
 
 // Check Spatial point class
-TEST_CASE("Spatial line", "[spatial][line]") {
+TEST_CASE("Spatial Segment", "[spatial][segment]") {
+  typedef bg::model::box<cityscape::spatial::Point> box;
   const double Tolerance = 1.E-7;
   // Test point
-  SECTION("Test point") {
+  SECTION("Test segment") {
     cityscape::id_t nid0 = 0;
     cityscape::id_t nid1 = 1;
     cityscape::id_t eid = 0;
@@ -36,15 +38,6 @@ TEST_CASE("Spatial line", "[spatial][line]") {
     REQUIRE(line->dest()->get_y() == dest->get_y());
     REQUIRE(line->weight() == Approx(13.756).epsilon(Tolerance));
     // check boost feature
-//    std::cout << "line: " << line->points()[0]->id() << ";"
-//              << line->points()[1]->id() << std::endl;
-    std::cout << bg::wkt<cityscape::spatial::Line>(*line) << std::endl;
     REQUIRE(boost::geometry::length(*line) == Approx(10).epsilon(Tolerance));
-
-
-
-    //    auto index = std::make_shared<cityscape::spatial::SpatialIndex<
-    //        std::shared_ptr<cityscape::spatial::Line>>>();
-    //    index->insert(line);
-      }
   }
+}

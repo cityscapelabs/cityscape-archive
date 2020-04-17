@@ -20,6 +20,8 @@ namespace spatial {
 //! \brief Base class of a spatial point (vertex)
 class Point : public cityscape::graph::Node {
  public:
+  /// \constructor_default_no_init
+  Point() = default;
   //! Constructor with unique point id
   //! \param[in] id Index of the edge
   //! \param[in] name Unique name of the point
