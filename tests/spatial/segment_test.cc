@@ -1,14 +1,13 @@
 #include "catch.hpp"
 
-#include "segment.h"
-#include "spatial_index.h"
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/box.hpp>
 #include <iostream>
 
+#include "segment.h"
+
 // Check Spatial point class
 TEST_CASE("Spatial line", "[spatial][line]") {
-  typedef bg::model::box<cityscape::spatial::Point> box;
   const double Tolerance = 1.E-7;
   cityscape::id_t nid0 = 0;
   cityscape::id_t nid1 = 1;
@@ -21,13 +20,13 @@ TEST_CASE("Spatial line", "[spatial][line]") {
   const std::array<double, 2> coordinates1 = {0, 10};
   // Create two points
   auto src =
-      std::make_shared<cityscape::spatial::Point>(nid0, name0, coordinates0);
+      std::make_shared<cityscape::spatial::Point_2d>(nid0, name0, coordinates0);
   auto dest =
-      std::make_shared<cityscape::spatial::Point>(nid1, name1, coordinates1);
+      std::make_shared<cityscape::spatial::Point_2d>(nid1, name1, coordinates1);
   // A test point
   const std::array<double, 2> coordinate = {1, 0};
-  auto test_p = std::make_shared<cityscape::spatial::Point>(111, "test_point",
-                                                            coordinate);
+  auto test_p = std::make_shared<cityscape::spatial::Point_2d>(
+      111, "test_point", coordinate);
 
   // Seg Name
   std::string tag = "seg0";
@@ -56,7 +55,8 @@ TEST_CASE("Spatial line", "[spatial][line]") {
     REQUIRE(boost::geometry::distance(*test_p, *seg) ==
             Approx(1).epsilon(Tolerance));
     // test on using with boost point
-    bg::model::point<double, 2, bg::cs::cartesian> point2(1.0, 2.0);
+    boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>
+        point2(1.0, 2.0);
     REQUIRE(boost::geometry::distance(point2, *seg) ==
             Approx(1).epsilon(Tolerance));
   }

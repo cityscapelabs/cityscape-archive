@@ -11,7 +11,7 @@
 #include <vector>
 
 namespace cityscape {
-namespace IO {
+namespace io {
 //! CSV_reader class
 //! \brief Base class to read csv file
 class CSV_reader {
@@ -60,7 +60,7 @@ class CSV_reader {
 };
 
 #include "csv_reader.tcc"
-}  // namespace IO
+}  // namespace io
 }  // namespace cityscape
 
 #endif  // CITYSCAPE_CSV_READER_H

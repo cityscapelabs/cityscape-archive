@@ -1,12 +1,12 @@
 #include "io/csv_reader.h"
 
-cityscape::IO::CSV_reader::CSV_reader(const std::string& filepath) {
+cityscape::io::CSV_reader::CSV_reader(const std::string& filepath) {
   filepath_ = filepath;
   read_row_data();
   row_to_col();
 }
 
-bool cityscape::IO::CSV_reader::read_row(std::istream& str) {
+bool cityscape::io::CSV_reader::read_row(std::istream& str) {
   std::string line;
   std::getline(str, line);
   std::stringstream lineStream(line);
@@ -24,14 +24,14 @@ bool cityscape::IO::CSV_reader::read_row(std::istream& str) {
   return !row_.empty();
 }
 
-void cityscape::IO::CSV_reader::header_map() {
+void cityscape::io::CSV_reader::header_map() {
   std::size_t n_key = headers_.size();
   for (std::size_t i = 0; i < n_key; i++) {
     header_map_[headers_[i]] = i;
   }
 }
 
-void cityscape::IO::CSV_reader::read_row_data() {
+void cityscape::io::CSV_reader::read_row_data() {
   std::ifstream infile(filepath_);
   read_row(infile);
   headers_ = row_;
@@ -41,7 +41,7 @@ void cityscape::IO::CSV_reader::read_row_data() {
   }
 }
 
-void cityscape::IO::CSV_reader::row_to_col() {
+void cityscape::io::CSV_reader::row_to_col() {
   std::size_t n_col = headers_.size();
   std::size_t n_row = row_data_.size();
 

@@ -2,14 +2,14 @@
 #define CITYSCAPE_CSV_READER_TCC
 
 template <typename Col_type>
-std::vector<Col_type> cityscape::IO::CSV_reader::get_col(
+std::vector<Col_type> cityscape::io::CSV_reader::get_col(
     const std::string& key) {
   auto idx = header_map_.at(key);
   return col_data_.at(idx);
 }
 
 template <>
-inline std::vector<double> cityscape::IO::CSV_reader::get_col<double>(
+inline std::vector<double> cityscape::io::CSV_reader::get_col<double>(
     const std::string& key) {
   auto idx = header_map_.at(key);
   auto string_vec = col_data_.at(idx);
@@ -21,7 +21,7 @@ inline std::vector<double> cityscape::IO::CSV_reader::get_col<double>(
 }
 
 template <>
-inline std::vector<int> cityscape::IO::CSV_reader::get_col<int>(
+inline std::vector<int> cityscape::io::CSV_reader::get_col<int>(
     const std::string& key) {
   auto idx = header_map_.at(key);
   auto string_vec = col_data_.at(idx);

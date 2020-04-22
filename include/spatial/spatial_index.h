@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "point.h"
+#include "point_2d.h"
 
 namespace bg = boost::geometry;
 namespace bgi = boost::geometry::index;
@@ -53,8 +54,8 @@ class SpatialIndex {
   //! \param[in] query_point point need to be queried
   //! \param[in] k number of nearest neighbor
   //! \param[out] query_result knn query result
-  std::vector<Leaf> knn(const cityscape::spatial::Point& query_point,
-                        unsigned k);
+  template <typename Query_type>
+  std::vector<Leaf> knn(const Query_type& query_point, unsigned k);
 
   //! size of the index
   id_t size() const { return indexer_.size(); }
@@ -67,4 +68,4 @@ class SpatialIndex {
 }  // namespace spatial
 }  // namespace cityscape
 
-#endif  // CITYSCAPE_INDEX_H_
+#endif  //

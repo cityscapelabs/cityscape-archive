@@ -1,8 +1,9 @@
 #include "catch.hpp"
 #include "csv_reader.h"
+#include "utils_io.h"
 
 TEST_CASE("CSV reader", "[csv_reader]") {
-  auto reader = std::make_shared<cityscape::IO::CSV_reader>(
+  auto reader = std::make_shared<cityscape::io::CSV_reader>(
       "../tests/test_data/csv_test.csv");
 
   SECTION("check read keys ") {
@@ -41,5 +42,15 @@ TEST_CASE("CSV reader", "[csv_reader]") {
     REQUIRE(col_str[0] == "100");
     REQUIRE(col_str[1] == "200");
     REQUIRE(col_str[2] == "300");
+  }
+
+  SECTION("Construct points from csv file") {
+    cityscape::io::CSV_point_info csv_info("../tests/test_data/csv_test.csv",
+                                           "id", "x", "y", "name", "tag");
+    auto point_list = cityscape::io::construct_points_csv(csv_info);
+
+    REQUIRE(point_list.size() == 3);
+    REQUIRE(point_list[1]->id() == 1);
+    REQUIRE(point_list[2]->check_tag("\"a fair place\"") == true);
   }
 }

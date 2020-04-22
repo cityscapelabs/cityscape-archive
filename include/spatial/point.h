@@ -1,7 +1,6 @@
 #ifndef CITYSCAPE_SPATIAL_POINT_H_
 #define CITYSCAPE_SPATIAL_POINT_H_
 
-#include <boost/geometry/geometries/register/point.hpp>
 #include <boost/geometry/geometry.hpp>
 
 #include <array>
@@ -15,7 +14,8 @@
 
 namespace cityscape {
 namespace spatial {
-
+template <std::size_t Dim,
+          typename CoordinateSystem = boost::geometry::cs::cartesian>
 //! Spatial point class
 //! \brief Base class of a spatial point (vertex)
 class Point : public cityscape::graph::Node {
@@ -28,20 +28,28 @@ class Point : public cityscape::graph::Node {
   //! \param[in] tag Tag to categorize point (default is empty)
   //! \param[in] coords Coordinates of the point (default is empty)
   Point(cityscape::id_t id, const std::string& name,
-        std::array<double, 2> coordinates,
-        const std::string& tag = std::string());
+        std::array<double, Dim> coordinates,
+        const std::string& tag = std::string())
+      : cityscape::graph::Node(id, name, tag), coordinates_(coordinates){};
 
-  //! Return x coordinates
-  //! \retval x coordinate of the point
-  double get_x() const;
-  //! Return y coordinates
-  //! \retval y coordinate of the point
-  double get_y() const;
+  //! Return kth coordinates
+  //! \retval kth coordinate of the point
+  template <std::size_t K>
+  double get() const {
+    if (K > Dim - 1) {
+      throw std::runtime_error("Try to get more dimension for a point");
+    }
+    return coordinates_[K];
+  }
 
-  //! Set coordinate x
-  void set_x(double x);
-  //! Set coordinate y
-  void set_y(double y);
+  //! Set kth coordinate
+  template <std::size_t K>
+  void set(double y) {
+    if (K > Dim - 1) {
+      throw std::runtime_error("Try to get more dimension for a point");
+    }
+    coordinates_[K] = y;
+  }
 
  protected:
   //! Point id
@@ -56,14 +64,54 @@ class Point : public cityscape::graph::Node {
   using cityscape::graph::Node::out_edges_;
 
  private:
-  std::array<double, 2> coordinates_;
+  std::array<double, Dim> coordinates_;
 };
+
 }  // namespace spatial
 }  // namespace cityscape
 
 // Register Point as a 2D Point
-BOOST_GEOMETRY_REGISTER_POINT_2D_GET_SET(cityscape::spatial::Point, double,
-                                         cs::cartesian, get_x, get_y, set_x,
-                                         set_y);
+// Adapt the point to the boost concept
+namespace boost {
+namespace geometry {
+namespace traits {
+template <std::size_t DimensionCount, typename CoordinateSystem>
+struct tag<cityscape::spatial::Point<DimensionCount, CoordinateSystem>> {
+  typedef point_tag type;
+};
 
+template <std::size_t DimensionCount, typename CoordinateSystem>
+struct coordinate_type<
+    cityscape::spatial::Point<DimensionCount, CoordinateSystem>> {
+  typedef double type;
+};
+
+template <std::size_t DimensionCount, typename CoordinateSystem>
+struct coordinate_system<
+    cityscape::spatial::Point<DimensionCount, CoordinateSystem>> {
+  typedef cs::cartesian type;
+};
+
+template <std::size_t DimensionCount, typename CoordinateSystem>
+struct dimension<cityscape::spatial::Point<DimensionCount, CoordinateSystem>>
+    : boost::mpl::int_<DimensionCount> {};
+
+template <std::size_t DimensionCount, typename CoordinateSystem,
+          std::size_t Dimension>
+struct access<cityscape::spatial::Point<DimensionCount, CoordinateSystem>,
+              Dimension> {
+  static inline double get(
+      cityscape::spatial::Point<DimensionCount, CoordinateSystem> const& p) {
+    return p.template get<Dimension>();
+  }
+
+  static inline void set(
+      cityscape::spatial::Point<DimensionCount, CoordinateSystem> const& p,
+      double const& value) {
+    p.template set<Dimension>(value);
+  }
+};
+}  // namespace traits
+}  // namespace geometry
+}  // namespace boost
 #endif  // CITYSCAPE_SPATIAL_POINT_H_

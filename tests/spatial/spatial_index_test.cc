@@ -9,7 +9,7 @@
 
 // Check Spatial point class
 TEST_CASE("Spatial point index", "[spatial][index]") {
-  using Point = cityscape::spatial::Point;
+  using Point = cityscape::spatial::Point_2d;
   using Seg = cityscape::spatial::Segment;
 
   const double Tolerance = 1.E-7;
@@ -82,5 +82,13 @@ TEST_CASE("Spatial point index", "[spatial][index]") {
 
     // Test query result id
     REQUIRE(closet_seg->id() == 0);
+
+    // test on using with boost point
+    boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>
+        point2(1.0, 2.0);
+    auto result_n2 = index->knn(point2, 1);
+    auto closet_seg2 = result_n2.at(0);
+    // Test query result id
+    REQUIRE(closet_seg2->id() == 0);
   }
 }
