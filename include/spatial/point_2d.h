@@ -16,10 +16,10 @@ class Point_2d : public cityscape::spatial::Point<2> {
 
   //! Return x coordinates
   //! \retval x coordinate of the point
-  double get_x() const { this->template get<0>(); }
+  double get_x() const { return this->template get<0>(); }
   //! Return y coordinates
   //! \retval y coordinate of the point
-  double get_y() const { this->template get<1>(); }
+  double get_y() const { return this->template get<1>(); }
 
   //! Set coordinate x
   void set_x(double x) { this->template set<0>(x); };

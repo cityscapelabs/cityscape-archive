@@ -16,13 +16,13 @@ class Point_3d : public cityscape::spatial::Point<3> {
 
   //! Return x coordinates
   //! \retval x coordinate of the point
-  double get_x() const { this->template get<0>(); }
+  double get_x() const { return this->template get<0>(); }
   //! Return y coordinates
   //! \retval y coordinate of the point
-  double get_y() const { this->template get<1>(); }
+  double get_y() const { return this->template get<1>(); }
   //! Return z coordinates
   //! \retval z coordinate of the point
-  double get_z() const { this->template get<2>(); }
+  double get_z() const { return this->template get<2>(); }
 
   //! Set coordinate x
   void set_x(double x) { this->template set<0>(x); };
