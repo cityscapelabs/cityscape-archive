@@ -52,9 +52,9 @@ class Graph {
   cityscape::id_t nedges() const;
 
   virtual  //! Return an edge pointer
-      //! \param[in] src Source node id
-      //! \param[in] dest Destination node id
-      //! \retval edge Edge pointer
+           //! \param[in] src Source node id
+           //! \param[in] dest Destination node id
+           //! \retval edge Edge pointer
       std::shared_ptr<cityscape::graph::Edge>
       edge(cityscape::id_t src, cityscape::id_t dest) const;
 
