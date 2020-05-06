@@ -39,7 +39,7 @@ struct CSV_point_info {
 //! Construct a vector of point ptrs from csv file
 //! \param[in] csv_info Information of the csv file
 //! \param[out] point_list Constructed point ptrs
-std::vector<std::shared_ptr<cityscape::spatial::Point_2d>> construct_points_csv(
+std::vector<std::shared_ptr<cityscape::spatial::Point2d>> construct_points_csv(
     const CSV_point_info& csv_info);
 
 }  // namespace io

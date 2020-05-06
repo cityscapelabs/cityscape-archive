@@ -5,7 +5,7 @@
 #include <segment.h>
 // Check Spatial point class
 TEST_CASE("Spatial utills check", "[spatial][utils]") {
-  using Point = cityscape::spatial::Point_2d;
+  using Point = cityscape::spatial::Point2d;
   using Seg = cityscape::spatial::Segment<Point>;
 
   const std::array<double, 2> coordinates0 = {1.5, 2.4};

@@ -92,13 +92,13 @@ TEST_CASE("Spatial point", "[spatial][point]") {
   SECTION("Test Point 2d") {
     // Coordinates for 2d
     std::array<double, 2> coords1 = {1., 1.};
-    cityscape::spatial::Point_2d p1{1, "s1", coords1};
+    cityscape::spatial::Point2d p1{1, "s1", coords1};
 
     std::array<double, 2> coords2 = {2., 2.};
-    cityscape::spatial::Point_2d p2{2, "s2", coords2};
+    cityscape::spatial::Point2d p2{2, "s2", coords2};
 
     std::vector<std::shared_ptr<cityscape::graph::Node>> test;
-    test.emplace_back(std::make_shared<cityscape::spatial::Point_2d>(p1));
+    test.emplace_back(std::make_shared<cityscape::spatial::Point2d>(p1));
 
     REQUIRE(boost::geometry::distance(p1, p2) ==
             Approx(1.414213562).epsilon(Tolerance));
@@ -106,12 +106,26 @@ TEST_CASE("Spatial point", "[spatial][point]") {
   SECTION("Test Point 3d") {
     // Coordinates for 2d
     std::array<double, 3> coords3 = {0, 0, 0};
-    cityscape::spatial::Point_3d p3{1, "s1", coords3};
+    cityscape::spatial::Point3d p3{1, "s1", coords3};
 
     std::array<double, 3> coords4 = {1, 1, 1};
-    cityscape::spatial::Point_3d p4{2, "s2", coords4};
+    cityscape::spatial::Point3d p4{2, "s2", coords4};
 
     REQUIRE(boost::geometry::distance(p3, p4) ==
             Approx(1.7320508076).epsilon(Tolerance));
+  }
+  SECTION("Test Point with radians coordinate") {
+    namespace bg = boost ::geometry;
+    // Coordinates for 2d
+    std::array<double, 2> coords1 = {23.725750, 37.971536};
+    cityscape::spatial::Point<2, bg::cs::geographic<bg ::degree>> p1{1, "s1",
+                                                                     coords1};
+
+    std::array<double, 2> coords2 = {4.3826169, 50.8119483};
+    cityscape::spatial::Point<2, bg::cs::geographic<bg ::degree>> p2{2, "s2",
+                                                                     coords2};
+
+    REQUIRE(boost::geometry::distance(p1, p2) ==
+            Approx(2088389.0786590837).epsilon(Tolerance));
   }
 }

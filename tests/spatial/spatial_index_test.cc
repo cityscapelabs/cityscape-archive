@@ -9,7 +9,7 @@
 
 // Check Spatial point class
 TEST_CASE("Spatial point index", "[spatial][index]") {
-  using Point = cityscape::spatial::Point_2d;
+  using Point = cityscape::spatial::Point2d;
   using Seg = cityscape::spatial::Segment<Point>;
 
   const double Tolerance = 1.E-7;

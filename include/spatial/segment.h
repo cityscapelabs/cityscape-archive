@@ -10,8 +10,8 @@
 namespace cityscape {
 namespace spatial {
 template <typename P>
-//! Spatial line class
-//! \brief Base class of a spatial line
+//! Spatial Segment class
+//! \brief Base class of a spatial segment
 class Segment : public cityscape::graph::Edge {
  public:
   //! Constructor with source and destination nodes and a unique edge id
@@ -31,9 +31,9 @@ class Segment : public cityscape::graph::Edge {
 
  private:
   //! Source node
-  std::shared_ptr<cityscape::spatial::Point_2d> src_;
+  std::shared_ptr<P> src_;
   //! Destination node
-  std::shared_ptr<cityscape::spatial::Point_2d> dest_;
+  std::shared_ptr<P> dest_;
 };
 }  // namespace spatial
 }  // namespace cityscape
@@ -54,7 +54,7 @@ struct point_type<Segment<P>> {
   typedef P type;
 };
 
-template <std::size_t Dimension,typename P>
+template <std::size_t Dimension, typename P>
 struct indexed_access<Segment<P>, 0, Dimension> {
   typedef typename geometry::coordinate_type<P>::type coordinate_type;
 
@@ -67,7 +67,7 @@ struct indexed_access<Segment<P>, 0, Dimension> {
   }
 };
 
-template <std::size_t Dimension,typename P>
+template <std::size_t Dimension, typename P>
 struct indexed_access<Segment<P>, 1, Dimension> {
   typedef typename geometry::coordinate_type<P>::type coordinate_type;
 

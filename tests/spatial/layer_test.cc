@@ -5,7 +5,7 @@
 TEST_CASE("Spatial layer check", "[spatial][layer]") {
 
   using namespace cityscape;
-  using Point = spatial::Point_2d;
+  using Point = spatial::Point2d;
   const double Tolerance = 1.E-7;
 
   // Test layer

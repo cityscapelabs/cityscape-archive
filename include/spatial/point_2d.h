@@ -5,13 +5,15 @@
 
 namespace cityscape {
 namespace spatial {
-class Point_2d : public cityscape::spatial::Point<2> {
+//! Spatial 2D point class
+//! \brief class of a 2D spatial point (vertex) in cartesian coordinate system
+class Point2d : public cityscape::spatial::Point<2> {
  public:
-  Point_2d() = default;
+  Point2d() = default;
 
-  Point_2d(cityscape::id_t id, const std::string& name,
-           std::array<double, 2> coordinates,
-           const std::string& tag = std::string())
+  Point2d(cityscape::id_t id, const std::string& name,
+          std::array<double, 2> coordinates,
+          const std::string& tag = std::string())
       : Point<2>(id, name, coordinates, tag){};
 
   //! Return x coordinates
@@ -29,7 +31,7 @@ class Point_2d : public cityscape::spatial::Point<2> {
 }  // namespace spatial
 }  // namespace cityscape
 // Register Point as a 2D Point
-BOOST_GEOMETRY_REGISTER_POINT_2D_GET_SET(cityscape::spatial::Point_2d, double,
+BOOST_GEOMETRY_REGISTER_POINT_2D_GET_SET(cityscape::spatial::Point2d, double,
                                          cs::cartesian, get_x, get_y, set_x,
                                          set_y)
 #endif  // CITYSCAPE_POINT_2D_H

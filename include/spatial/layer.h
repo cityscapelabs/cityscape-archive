@@ -43,7 +43,8 @@ class Layer : public cityscape::graph::Graph {
     return point_index_;
   }
   //! Get segment index (Rtree)
-  std::shared_ptr<SpatialIndex<std::shared_ptr<Segment<P>>>> segment_index() const {
+  std::shared_ptr<SpatialIndex<std::shared_ptr<Segment<P>>>> segment_index()
+      const {
     return segment_index_;
   }
 

@@ -22,7 +22,7 @@ bool cityscape::graph::Graph::add_node(const std::shared_ptr<Node>& node) {
   try {
     // Insert if node is not found in the graph
     if (nodes_names_.find(node->name()) == nodes_names_.end()) {
-      auto nid = node->id ();
+      auto nid = node->id();
       nodes_.emplace(std::make_pair(nid, node));
       nodes_names_.emplace(std::make_pair(node->name(), nid));
     } else {
