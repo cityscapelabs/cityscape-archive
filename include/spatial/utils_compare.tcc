@@ -4,7 +4,7 @@
 #include "utils_compare.h"
 
 template <typename Src, typename Dst>
-std::map<std::shared_ptr<Src>, std::shared_ptr<Dst>> map_objects(
+std::map<std::shared_ptr<Src>, std::shared_ptr<Dst>> map_closest_objects(
     const std::vector<std::shared_ptr<Src>>& src_objs,
     const std::vector<std::shared_ptr<Dst>>& dst_objs) {
 
@@ -33,14 +33,14 @@ void merge_object_pair(const std::shared_ptr<Obj>& src_obj,
 template <typename Obj>
 std::vector<std::shared_ptr<Obj>> merge_objects(
     const std::vector<std::shared_ptr<Obj>>& src_objects,
-    std::vector<std::shared_ptr<Obj>>& dst_objects, double dist_thre) {
+    std::vector<std::shared_ptr<Obj>>& dst_objects,
+    const Condition<Obj>& cond) {
 
   std::vector<std::shared_ptr<Obj>> leftovers;
-  auto relation_map = map_objects(src_objects, dst_objects);
+  auto relation_map = map_closest_objects(src_objects, dst_objects);
   for (const auto& src_p : src_objects) {
     auto dst_p = relation_map.at(src_p);
-    auto dist = boost::geometry::distance(*src_p, *dst_p);
-    if (dist < dist_thre) {
+    if (cond.is_satisfied(*src_p, *dst_p)) {
       merge_object_pair(src_p, dst_p);
     } else {
       leftovers.emplace_back(src_p);

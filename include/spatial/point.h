@@ -89,7 +89,7 @@ struct coordinate_type<
 template <std::size_t DimensionCount, typename CoordinateSystem>
 struct coordinate_system<
     cityscape::spatial::Point<DimensionCount, CoordinateSystem>> {
-  typedef cs::cartesian type;
+  typedef CoordinateSystem type;
 };
 
 template <std::size_t DimensionCount, typename CoordinateSystem>

@@ -51,7 +51,7 @@ class Graph {
   //! Number of edges
   cityscape::id_t nedges() const;
 
-  //! Return an edge pointer
+    virtual //! Return an edge pointer
   //! \param[in] src Source node id
   //! \param[in] dest Destination node id
   //! \retval edge Edge pointer
@@ -74,13 +74,11 @@ class Graph {
   double path_cost(const std::vector<cityscape::id_t>& path,
                    Container ctr = Container::Edges) const;
 
- private:
+ protected:
   //! Graph id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
   //! Tags
   std::set<std::string> tags_;
-  //! Node ID manager
-  cityscape::IndexManager node_idx_;
   //! Edge ID manager
   cityscape::IndexManager edge_idx_;
   //! Nodes

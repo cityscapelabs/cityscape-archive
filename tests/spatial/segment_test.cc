@@ -9,6 +9,7 @@
 // Check Spatial point class
 TEST_CASE("Spatial line", "[spatial][line]") {
   const double Tolerance = 1.E-7;
+  using Point = cityscape::spatial::Point_2d;
   cityscape::id_t nid0 = 0;
   cityscape::id_t nid1 = 1;
   cityscape::id_t eid = 0;
@@ -20,18 +21,18 @@ TEST_CASE("Spatial line", "[spatial][line]") {
   const std::array<double, 2> coordinates1 = {0, 10};
   // Create two points
   auto src =
-      std::make_shared<cityscape::spatial::Point_2d>(nid0, name0, coordinates0);
+      std::make_shared<Point>(nid0, name0, coordinates0);
   auto dest =
-      std::make_shared<cityscape::spatial::Point_2d>(nid1, name1, coordinates1);
+      std::make_shared<Point>(nid1, name1, coordinates1);
   // A test point
   const std::array<double, 2> coordinate = {1, 0};
-  auto test_p = std::make_shared<cityscape::spatial::Point_2d>(
+  auto test_p = std::make_shared<Point>(
       111, "test_point", coordinate);
 
   // Seg Name
   std::string tag = "seg0";
   // Create a line with an id of 0
-  auto seg = std::make_shared<cityscape::spatial::Segment>(src, dest, eid, tag);
+  auto seg = std::make_shared<cityscape::spatial::Segment<Point>>(src, dest, eid, tag);
   seg->weight(13.756);
 
   // Test segment

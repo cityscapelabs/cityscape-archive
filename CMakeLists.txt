@@ -93,6 +93,7 @@ if(CITYSCAPE_BUILD_TESTING)
 #          ${cityscape_SOURCE_DIR}/tests/spatial/line_test.cc
           ${cityscape_SOURCE_DIR}/tests/spatial/segment_test.cc
           ${cityscape_SOURCE_DIR}/tests/spatial/spatial_index_test.cc
+          ${cityscape_SOURCE_DIR}/tests/spatial/layer_test.cc
           ${cityscape_SOURCE_DIR}/tests/spatial/utils_test.cc
 #          ${cityscape_SOURCE_DIR}/tests/spatial/bay_pipes.cc
           ${cityscape_SOURCE_DIR}/tests/csv_reader_test.cc
