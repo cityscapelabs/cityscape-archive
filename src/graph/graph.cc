@@ -3,7 +3,7 @@
 
 //! Constructor with a unique graph id, tag and initialize idx
 cityscape::graph::Graph::Graph(cityscape::id_t id, const std::string& tag)
-    : id_{id}, node_idx_{0}, edge_idx_{0} {
+    : id_{id}, edge_idx_{0} {
   // If not an empty tag, insert tag
   if (!tag.empty()) tags_.insert(tag);
 }
@@ -22,7 +22,7 @@ bool cityscape::graph::Graph::add_node(const std::shared_ptr<Node>& node) {
   try {
     // Insert if node is not found in the graph
     if (nodes_names_.find(node->name()) == nodes_names_.end()) {
-      auto nid = node_idx_.create_index();
+      auto nid = node->id();
       nodes_.emplace(std::make_pair(nid, node));
       nodes_names_.emplace(std::make_pair(node->name(), nid));
     } else {
