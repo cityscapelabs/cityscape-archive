@@ -1,66 +1,94 @@
 #include "catch.hpp"
-
 #include <chrono>
 
 // to store queries results
 #include <vector>
 
+#include "segment.h"
 #include "spatial_index.h"
 
 // Check Spatial point class
-TEST_CASE("Spatial point index", "[spatial][point]") {
-  typedef cityscape::spatial::Point Point;
+TEST_CASE("Spatial point index", "[spatial][index]") {
+  using Point = cityscape::spatial::Point2d;
+  using Seg = cityscape::spatial::Segment<Point>;
 
   const double Tolerance = 1.E-7;
   // create some points for storing
-  const std::vector<Point> points{Point(0, "spatial0", {1.5, 2.4}),
-                                  Point(1, "spatial1", {1.8, 2.4}),
-                                  Point(2, "spatial2", {3, 4})};
+  // Coordinates
+  const std::array<double, 2> coordinates0 = {1.5, 2.4};
+  const std::array<double, 2> coordinates1 = {1.8, 2.4};
+  const std::array<double, 2> coordinates2 = {3, 4};
+
+  auto p0 = std::make_shared<Point>(0, "spatial0", coordinates0);
+  auto p1 = std::make_shared<Point>(1, "spatial1", coordinates1);
+  auto p2 = std::make_shared<Point>(2, "spatial2", coordinates2);
+
+  const std::vector<std::shared_ptr<Point>> points{p0, p1, p2};
+  // create some segments for storing
+  auto seg0 = std::make_shared<Seg>(p0, p1, 0, "seg0");
+  auto seg1 = std::make_shared<Seg>(p0, p2, 1, "seg1");
+  auto seg2 = std::make_shared<Seg>(p1, p2, 2, "seg2");
+  const std::vector<std::shared_ptr<Seg>> segments{seg0, seg1, seg2};
+
   const unsigned n = 3;
   // create a query point
   Point query_p(3, "query point", {1.3, 2.2});
 
   SECTION("spatial index with no packing ") {
     // create the rtree using default constructor
-    auto index = std::make_shared<cityscape::spatial::SpatialIndex>();
+    auto index = std::make_shared<
+        cityscape::spatial::SpatialIndex<std::shared_ptr<Point>>>();
 
-    for (unsigned i = 0; i < n; ++i) {
-      auto p = points.at(i);
-      // insert new value
-      index->insert(std::make_pair(p, i));
+    for (const auto& p : points) {
+      index->insert(p);
     }
-
     REQUIRE(index->size() == n);
 
     // find nearest values to a point
     auto result_n = index->knn(query_p, 1);
-    auto closet_p = result_n.at(0).first;
+    auto closet_p = result_n.at(0);
 
     // Test query result id
-    REQUIRE(closet_p.id() == 0);
+    REQUIRE(closet_p->id() == 0);
     // Check query result name
-    REQUIRE(closet_p.name() == "spatial0");
+    REQUIRE(closet_p->name() == "spatial0");
   }
 
   SECTION("Index with packing") {
-    std::vector<cityscape::spatial::rtree_leaf_point> leaves;
-    // create some values
-    for (unsigned i = 0; i < n; ++i) {
-      auto p = points.at(i);
-      // insert new value
-      leaves.emplace_back(std::make_pair(p, i));
-    }
     // create the index using packing algorithm
-    auto index = std::make_shared<cityscape::spatial::SpatialIndex>(leaves);
+    auto index = std::make_shared<
+        cityscape::spatial::SpatialIndex<std::shared_ptr<Point>>>(points);
     REQUIRE(index->size() == n);
 
     // find nearest values to a point
     auto result_n = index->knn(query_p, 1);
-    auto closet_p = result_n.at(0).first;
+    auto closet_p = result_n.at(0);
 
     // Test query result id
-    REQUIRE(closet_p.id() == 0);
+    REQUIRE(closet_p->id() == 0);
     // Check query result name
-    REQUIRE(closet_p.name() == "spatial0");
+    REQUIRE(closet_p->name() == "spatial0");
+  }
+
+  SECTION("Index for segments") {
+    // create the index using packing algorithm
+    auto index = std::make_shared<
+        cityscape::spatial::SpatialIndex<std::shared_ptr<Seg>>>(segments);
+    REQUIRE(index->size() == n);
+
+    // find nearest segment to a point
+    auto result_n = index->knn(query_p, 1);
+    auto closet_seg = result_n.at(0);
+
+    // Test query result id
+    REQUIRE(closet_seg->id() == 0);
+
+    // test on using with boost point
+    boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>
+        point2(1.0, 2.0);
+    auto result_n2 = index->knn(point2, 1);
+    auto closet_seg2 = result_n2.at(0);
+    // Test query result id
+    REQUIRE(closet_seg2->id() == 0);
   }
 }

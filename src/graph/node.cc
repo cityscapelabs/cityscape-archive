@@ -35,6 +35,12 @@ void cityscape::graph::Node::add_edge(
     in_edges_.emplace_back(edge);
     out_edges_.emplace_back(edge);
   }
+  degree_ += 1;
+}
+
+//! Add tag to node
+void cityscape::graph::Node::add_tag(const std::string& tag) {
+  if (!tag.empty()) tags_.insert(tag);
 }
 
 //! Return outgoing edges
