@@ -4,6 +4,7 @@
 #include <limits>
 #include <memory>
 #include <set>
+#include <string>
 #include <vector>
 
 #include "types.h"
