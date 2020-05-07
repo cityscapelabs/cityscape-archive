@@ -55,8 +55,8 @@ class Graph {
   //! \param[in] src Source node id
   //! \param[in] dest Destination node id
   //! \retval edge Edge pointer
-  std::shared_ptr<cityscape::graph::Edge> edge(cityscape::id_t src,
-                                               cityscape::id_t dest) const;
+  virtual std::shared_ptr<cityscape::graph::Edge> edge(
+      cityscape::id_t src, cityscape::id_t dest) const;
 
   //! Compute the shortest path using priority queue
   //! \param[in] src Source node name
@@ -74,13 +74,11 @@ class Graph {
   double path_cost(const std::vector<cityscape::id_t>& path,
                    Container ctr = Container::Edges) const;
 
- private:
+ protected:
   //! Graph id
   cityscape::id_t id_{std::numeric_limits<cityscape::id_t>::max()};
   //! Tags
   std::set<std::string> tags_;
-  //! Node ID manager
-  cityscape::IndexManager node_idx_;
   //! Edge ID manager
   cityscape::IndexManager edge_idx_;
   //! Nodes

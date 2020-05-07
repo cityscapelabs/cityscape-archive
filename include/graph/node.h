@@ -23,6 +23,7 @@ enum Direction { Any, Outgoing, Incoming };
 //! \brief Base class of a graph node (vertex)
 class Node {
  public:
+  Node() = default;
   //! Constructor with unique node id
   //! \param[in] id Index of the edge
   //! \param[in] name Unique name of the node
@@ -40,11 +41,21 @@ class Node {
   //! Return name
   std::string name() const;
 
+  //! Return tag
+  std::set<std::string> tag() const { return tags_; }
+
+  //! Return connectivity degree
+  cityscape::id_t connect_degree() const { return degree_; }
+
   //! Add edge
   //! \param[in] edge Edge pointer
   //! \param[in] dir Direction of edge
   void add_edge(const std::shared_ptr<cityscape::graph::Edge>& edge,
                 Direction dir);
+
+  //! Add tag
+  //! \param[in] tag New tag
+  void add_tag(const std::string& tag);
 
   //! Out edges
   //! \retval out_edges Return vector of outgoing edges
@@ -57,6 +68,8 @@ class Node {
   std::set<std::string> tags_;
   //! Name
   std::string name_;
+  //! Connectivity degree
+  cityscape::id_t degree_{0};
   //! In-edges
   std::vector<std::shared_ptr<cityscape::graph::Edge>> in_edges_;
   //! Out-edges
